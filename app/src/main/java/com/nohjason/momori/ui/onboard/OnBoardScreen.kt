@@ -1,5 +1,6 @@
 package com.nohjason.momori.ui.onboard
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
@@ -17,8 +18,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,17 +35,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nohjason.momori.R
 
+@SuppressLint("StateFlowValueCalledInComposition")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OnBoardScreen(msg: String) {
-
+fun OnBoardScreen(
+    viewModel: OnBoardViewModel = viewModel()
+) {
 //    val imageModifier = Modifier
 //        .size(50.dp)
 //        .border(BorderStroke(1.dp, Color.Black))
 //        .background(Color.Yellow)
 
     val context = LocalContext.current
+//    val state by viewModel.state.collectAsState()
 
     Column (
         Modifier
@@ -47,6 +59,7 @@ fun OnBoardScreen(msg: String) {
 
         Text(text = "momori", modifier = Modifier.align(CenterHorizontally))
 
+//        TextField(value = state.id, onValueChange = { viewModel.updateId(it) })
         Spacer(modifier = Modifier.height(200.dp))
         Column {
             Text(text = "당신의", fontSize = 28.sp, fontWeight = FontWeight.ExtraBold)
