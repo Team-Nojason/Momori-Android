@@ -20,6 +20,7 @@ object MomoriColor {
 
     val MainColor = Color(0xFF2252B6)
 
+    // TODO: Change Main Color
     val MainColor50 = Color(0xFFFEFFFF)
     val MainColor100 = Color(0xFFD2DCF0)
     val MainColor200 = Color(0xFFA6BAE2)
