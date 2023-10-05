@@ -1,8 +1,14 @@
 package com.nohjason.momori.ui.main
 
+import android.content.Context
+import android.content.pm.PackageManager
+import android.util.Log
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -21,7 +27,7 @@ fun MainScreen() {
     ) {
         Marker(
             position = singapore,
-            title = "Singapore",
+            title = "Sex",
             snippet = "Marker in Singapore"
         )
     }

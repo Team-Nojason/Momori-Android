@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.nohjason.momori.ui.main.MainScreen
+//import com.nohjason.momori.ui.main.checkAndRequestPermissions
 import com.nohjason.momori.ui.onboard.OnBoardScreen
 import com.nohjason.momori.ui.theme.MomoriTheme
 
