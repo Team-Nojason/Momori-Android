@@ -36,7 +36,7 @@ class MomoriShape(
     }
 
     override fun toString(): String {
-        return "Sgx shapes(small=$small, medium=$medium, large=$large)"
+        return "Momori shapes(small=$small, medium=$medium, large=$large)"
     }
 }
 

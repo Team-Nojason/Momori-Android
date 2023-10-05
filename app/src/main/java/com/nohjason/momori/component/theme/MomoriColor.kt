@@ -12,7 +12,9 @@ object MomoriColor {
     val Black = Color(0xFF000000)
     val Background = Color(0xFFFFFFFF)
 
-    val Error = Color(0xFFE44449)
+    val Mint = Color(0xFF01FFC2)
+
+    val Error = Color(0xFFF31E2B)
 
     val Transparent = Color(0x00000000)
 
