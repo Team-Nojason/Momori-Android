@@ -14,5 +14,5 @@ fun SettingScreen() {
     }
 }
 
-@Composable
-@Preview()
+//@Composable
+//@Preview()
