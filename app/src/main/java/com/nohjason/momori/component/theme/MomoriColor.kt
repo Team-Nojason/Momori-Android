@@ -14,7 +14,7 @@ object MomoriColor {
 
     val Mint = Color(0xFF01FFC2)
 
-    val Error = Color(0xFFF31E2B)
+    val Red = Color(0xFFF31E2B)
 
     val Transparent = Color(0x00000000)
 
@@ -47,18 +47,11 @@ object MomoriColor {
 
 @Composable
 fun contentColorFor(backgroundColor: Color) =
-    MomoriColor.contentColorFor(backgroundColor).takeOrElse { LocalContentColor.current }
-
-private fun MomoriColor.contentColorFor(backgroundColor: Color): Color {
-    return when (backgroundColor) {
-        MainColor -> White
-        Error -> White
-        Gray100 -> White
-        Background -> Black
-        White -> Black
-        else -> White
+    when (backgroundColor) {
+        MomoriColor.Transparent -> MomoriColor.Black
+        MomoriColor.White -> MomoriColor.Black
+        else -> MomoriColor.White
     }
-}
 
 internal val LocalColor = staticCompositionLocalOf { MomoriColor }
 internal val LocalContentColor = compositionLocalOf { Color.Black }

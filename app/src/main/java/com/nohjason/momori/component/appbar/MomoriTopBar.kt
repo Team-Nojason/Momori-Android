@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.nohjason.momori.R
+import com.nohjason.momori.component.button.ButtonType
 import com.nohjason.momori.component.button.MomoriIconButton
 import com.nohjason.momori.component.theme.MomoriColor
 import com.nohjason.momori.component.theme.Title
@@ -47,7 +48,8 @@ fun MomoriTopBar(
                     modifier = Modifier,
                     iconId = primaryIconId,
                     contentDescription = "to back",
-                    onClick = primaryButtonCallback
+                    onClick = primaryButtonCallback,
+                    type = ButtonType.Transparent
                 )
             Spacer(modifier = Modifier.width(8.dp))
             Title(text = titleText)
