@@ -17,11 +17,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Momori"
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="31"
         >
-<!--        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCo6sPQWqRLA1mYGvsCh7r-RThQaLwhefY"/>
--->     <meta-data android:name="com.kakao.sdk.AppKey" android:value="d3cf754c55889123300a7c1bc89df665" />
-
+        <meta-data
+            android:name="com.kakao.vectormap.APP_KEY"
+            android:value="d3cf754c55889123300a7c1bc89df665"/>
         <activity
             android:name=".ui.root.MainActivity"
             android:exported="true"

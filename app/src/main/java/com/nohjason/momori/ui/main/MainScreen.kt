@@ -1,9 +1,11 @@
 package com.nohjason.momori.ui.main
 
 import android.Manifest
+import android.content.Context
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Looper
+import android.util.Base64
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -11,7 +13,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.currentRecomposeScope
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,12 +25,17 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.kakao.vectormap.KakaoMap
+import com.kakao.vectormap.KakaoMapReadyCallback
+import com.kakao.vectormap.MapLifeCycleCallback
+import com.kakao.vectormap.MapView
 import com.nohjason.momori.component.button.ButtonType
 import com.nohjason.momori.component.button.MomoriButton
-import com.nohjason.momori.component.theme.MomoriColor
 import com.nohjason.momori.util.PermissionUtil.requestPermissions
 import com.nohjason.momori.util.TAG
-import net.daum.mf.map.api.MapView
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+
 
 private val locationPermissions = arrayOf(
     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -104,17 +110,34 @@ fun MainScreen() {
 
     LaunchedEffect(true) {
         requestPermissions(context, locationPermissions, launcherMultiplePermissions)
+
+        getHashKey(context)
     }
 
     // view
     if (isAllowLocationPermission)
         AndroidView(
-            modifier = Modifier.fillMaxSize(), // Occupy the max size in the Compose UI tree
+            modifier = Modifier.fillMaxSize(),
             factory = { context ->
-                // Creates view
-                MapView(context).apply {
+                val a = MapView(context)
+                a.start(object : MapLifeCycleCallback() {
+                    override fun onMapDestroy() {
+                        // 지도 API 가 정상적으로 종료될 때 호출됨
+                        Log.d(TAG, " - onMapDestroy() called")
+                    }
 
-                }
+                    override fun onMapError(error: Exception) {
+                        // 인증 실패 및 지도 사용 중 에러가 발생할 때 호출됨
+                        Log.d(TAG, "${error} - onMapError() called")
+                    }
+                }, object : KakaoMapReadyCallback() {
+                    override fun onMapReady(kakaoMap: KakaoMap) {
+                        // 인증 후 API 가 정상적으로 실행될 때 호출됨
+                        Log.d(TAG, " - onMapReady() called")
+                    }
+                });
+
+                a
             },
         )
         else
@@ -130,4 +153,25 @@ fun MainScreen() {
                     )
                 }
             }
+}
+
+
+private fun getHashKey(context: Context) {
+    var packageInfo: PackageInfo? = null
+    try {
+        packageInfo =
+            context.packageManager.getPackageInfo(context.packageName, PackageManager.GET_SIGNATURES)
+    } catch (e: PackageManager.NameNotFoundException) {
+        e.printStackTrace()
+    }
+    if (packageInfo == null) Log.e("KeyHash", "KeyHash:null")
+    for (signature in packageInfo!!.signatures) {
+        try {
+            val md = MessageDigest.getInstance("SHA")
+            md.update(signature.toByteArray())
+            Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT))
+        } catch (e: NoSuchAlgorithmException) {
+            Log.e("KeyHash", "Unable to get MessageDigest. signature=$signature", e)
+        }
+    }
 }

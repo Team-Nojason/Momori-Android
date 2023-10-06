@@ -51,8 +51,7 @@ android {
 
 
 dependencies {
-    // Kakao maps sdk
-    implementation(files("libs/libDaumMapAndroid.jar"))
+    implementation ("com.kakao.maps.open:android:2.6.0")
 
     // retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
