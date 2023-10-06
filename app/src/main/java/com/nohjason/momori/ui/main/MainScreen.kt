@@ -1,179 +1,150 @@
 package com.nohjason.momori.ui.main
 
-import com.google.android.gms.location.FusedLocationProviderClient
-
 import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Looper
 import android.util.Log
-import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.currentRecomposeScope
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.nohjason.momori.util.PermissionUtil.checkAndRequestPermissions
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
+import com.nohjason.momori.component.button.ButtonType
+import com.nohjason.momori.component.button.MomoriButton
+import com.nohjason.momori.component.theme.MomoriColor
+import com.nohjason.momori.util.PermissionUtil.requestPermissions
+import com.nohjason.momori.util.TAG
 
-//The main entry point for interacting with the Fused Location Provider
+private val locationPermissions = arrayOf(
+    Manifest.permission.ACCESS_COARSE_LOCATION,
+    Manifest.permission.ACCESS_FINE_LOCATION
+)
+
 @Composable
 fun MainScreen() {
     val context = LocalContext.current
-    val fusedLocationClient by remember { mutableStateOf(LocationServices.getFusedLocationProviderClient(context)) }
+    val tempLocation by remember {
+      mutableStateOf(LatLng(35.6649411, 128.411552))
+    }
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(tempLocation, 16f)
+    }
+    var currentLocation: LatLng? by remember {
+        mutableStateOf(null)
+    }
 
-    val coroutine = rememberCoroutineScope()
-
-    val singapore = LatLng(35.6649411, 128.411552)
-
+    /**
+     * 권한
+     */
+    // 위치 권한이 있는가
     var isAllowLocationPermission by remember { mutableStateOf(false) }
 
-    val locationCallback = object : LocationCallback() {
-        override fun onLocationResult(result: LocationResult) {
-//            Log.d("location")그
-            if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                fusedLocationClient.lastLocation
-                    .addOnSuccessListener { location ->
-                        location?.let {
-                            val lat = location.latitude
-                            val long = location.longitude
-                            isAllowLocationPermission = true
-                            Log.d("로그", "$lat, $long")
-                        }
-                    }
-                    .addOnFailureListener {
-                        Log.e("Location_error", "${it.message}")
-                    }
-            }
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    fun locationUpdate() {
-        locationCallback.let {
-            val locationRequest = LocationRequest.Builder(1000)
-                .setIntervalMillis(1000)
-//                .setFastestIntervalMillis(5000)
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .build()
-            if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                Log.d("로그","ㅅㅂ 허용해라")
-                return
-            }
-            fusedLocationClient.requestLocationUpdates(
-                locationRequest,
-                it,
-                Looper.getMainLooper()
-            )
-        }
-    }
-
-    LaunchedEffect(true) {
-        locationUpdate()
-        coroutine.launch {
-            while (true) {
-                if (ActivityCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    fusedLocationClient.lastLocation
-                        .addOnSuccessListener { location : Location? ->
-                            Log.d("location", location.toString())
-                        }
-                    isAllowLocationPermission = true
-                }
-                delay(1000)
-            }
-        }
-    }
-
-//    val polyline = map.addPolyline(polylineOptions)
-
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(singapore, 16f)
-    }
-//    /** 요청할 권한 **/
-    val permissions = arrayOf(
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_FINE_LOCATION
-    )
-//
-    var a by remember { mutableStateOf(false) }
-
+    // 권한 결과 처리
     val launcherMultiplePermissions = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissionsMap ->
+        if (permissionsMap.values.isEmpty()) return@rememberLauncherForActivityResult
         val areGranted = permissionsMap.values.reduce { acc, next -> acc && next }
-        /** 권한 요청시 동의 했을 경우 **/
-        if (areGranted) {
-            a = false
-            Log.d("test5", "권한이 동의되었습니다.")
-        }
-        /** 권한 요청시 거부 했을 경우 **/
-        else {
-            a = true
-            Log.d("test5", "권한이 거부되었습니다.")
+        isAllowLocationPermission = areGranted
+    }
+
+    /**
+     * 위치 조회
+     */
+    // 내 위치 조회 요청 클라이언트
+    val fusedLocationClient by remember { mutableStateOf(LocationServices.getFusedLocationProviderClient(context)) }
+
+
+    // 마지막 위치 불러오는 함수
+    val locationCallback = object : LocationCallback() {
+        override fun onLocationResult(locations: LocationResult) {
+            for (location in locations.locations) {
+                currentLocation = LatLng(location.latitude, location.longitude)
+                Log.d(TAG, "w - ${location.latitude} g - ${location.longitude} - onLocationResult() called")
+            }
         }
     }
 
-    if (a) {
-        checkAndRequestPermissions(context, permissions, launcherMultiplePermissions)
+    fun getAllowLocationPermission()
+    = ActivityCompat.checkSelfPermission(
+        context,
+        Manifest.permission.ACCESS_FINE_LOCATION
+    ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+        context,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    ) == PackageManager.PERMISSION_GRANTED
+
+
+    // 1초 마다 위치 업데이트 되었는지 체크
+    fun locationUpdate() {
+        if (!getAllowLocationPermission()) return
+
+        val locationRequest = LocationRequest.Builder(1000) // 1초마다 체크
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+            .build()
+
+        fusedLocationClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.getMainLooper()
+        )
+    }
+
+    LaunchedEffect(isAllowLocationPermission) {
+        if (isAllowLocationPermission) {
+            locationUpdate()
+        }
     }
 
     LaunchedEffect(true) {
-        checkAndRequestPermissions(context, permissions, launcherMultiplePermissions)
+        requestPermissions(context, locationPermissions, launcherMultiplePermissions)
     }
-//
-    GoogleMap(
-        modifier = Modifier.fillMaxSize(),
-        cameraPositionState = cameraPositionState
-    ) {
-        Marker(
-            position = singapore,
-            title = "wow",
-            snippet = "Marker in Singapore"
-        )
-    }
+
+    // view
+    if (isAllowLocationPermission)
+        GoogleMap(
+            modifier = Modifier.fillMaxSize(),
+            cameraPositionState = cameraPositionState
+        ) {
+            if (currentLocation != null)
+                Circle(
+                    center = currentLocation!!,
+                    fillColor = MomoriColor.Mint,
+                    radius = 10.0,
+                ) {
+
+                }
+        }
+        else
+            Column {
+                MomoriButton(
+                    text = "권한 요청",
+                    type = ButtonType.Mint
+                ) {
+                    requestPermissions(
+                        context,
+                        locationPermissions,
+                        launcherMultiplePermissions
+                    )
+                }
+            }
 }

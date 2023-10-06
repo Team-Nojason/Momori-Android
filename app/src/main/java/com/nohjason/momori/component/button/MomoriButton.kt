@@ -27,7 +27,6 @@ sealed class ButtonType(val buttonColor: Color, val disableColor: Color = Momori
 
 @Composable
 fun MomoriButton(
-    onClick: () -> Unit,
     modifier: Modifier = Modifier,
     text: String = "",
     type: ButtonType,
@@ -37,6 +36,7 @@ fun MomoriButton(
     border: BorderStroke? = null,
     contentPadding: PaddingValues = ButtonDefaults.TextButtonContentPadding,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    onClick: () -> Unit,
 ) {
     Button(
         onClick = onClick,

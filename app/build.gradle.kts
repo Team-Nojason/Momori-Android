@@ -58,8 +58,9 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
     // google map
-    implementation ("com.google.maps.android:maps-compose:1.0.0")
-    implementation ("com.google.android.gms:play-services-maps:18.0.2")
+    implementation ("com.google.maps.android:maps-compose:2.11.4")
+
+    implementation ("com.google.android.gms:play-services-maps:18.1.0")
 
     // compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
