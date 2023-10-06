@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nohjason.momori"
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -7,8 +8,8 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
 
     <application
-
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +19,9 @@
         android:theme="@style/Theme.Momori"
         tools:targetApi="31"
         >
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCo6sPQWqRLA1mYGvsCh7r-RThQaLwhefY"/>
+<!--        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCo6sPQWqRLA1mYGvsCh7r-RThQaLwhefY"/>
+-->     <meta-data android:name="com.kakao.sdk.AppKey" android:value="d3cf754c55889123300a7c1bc89df665" />
+
         <activity
             android:name=".ui.root.MainActivity"
             android:exported="true"

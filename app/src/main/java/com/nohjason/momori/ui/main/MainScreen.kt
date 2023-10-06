@@ -18,22 +18,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.Circle
-import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.MapProperties
-import com.google.maps.android.compose.rememberCameraPositionState
 import com.nohjason.momori.component.button.ButtonType
 import com.nohjason.momori.component.button.MomoriButton
 import com.nohjason.momori.component.theme.MomoriColor
 import com.nohjason.momori.util.PermissionUtil.requestPermissions
 import com.nohjason.momori.util.TAG
+import net.daum.mf.map.api.MapView
 
 private val locationPermissions = arrayOf(
     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -43,15 +39,6 @@ private val locationPermissions = arrayOf(
 @Composable
 fun MainScreen() {
     val context = LocalContext.current
-    val tempLocation by remember {
-      mutableStateOf(LatLng(35.6649411, 128.411552))
-    }
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(tempLocation, 16f)
-    }
-    var currentLocation: LatLng? by remember {
-        mutableStateOf(null)
-    }
 
     /**
      * 권한
@@ -79,7 +66,6 @@ fun MainScreen() {
     val locationCallback = object : LocationCallback() {
         override fun onLocationResult(locations: LocationResult) {
             for (location in locations.locations) {
-                currentLocation = LatLng(location.latitude, location.longitude)
                 Log.d(TAG, "w - ${location.latitude} g - ${location.longitude} - onLocationResult() called")
             }
         }
@@ -122,18 +108,15 @@ fun MainScreen() {
 
     // view
     if (isAllowLocationPermission)
-        GoogleMap(
-            modifier = Modifier.fillMaxSize(),
-            cameraPositionState = cameraPositionState,
-            properties = MapProperties(
-                isTrafficEnabled = true,
-//                isBuildingEnabled = true,
-                isMyLocationEnabled = true,
-                isIndoorEnabled = true
-            )
-        ) {
+        AndroidView(
+            modifier = Modifier.fillMaxSize(), // Occupy the max size in the Compose UI tree
+            factory = { context ->
+                // Creates view
+                MapView(context).apply {
 
-        }
+                }
+            },
+        )
         else
             Column {
                 MomoriButton(

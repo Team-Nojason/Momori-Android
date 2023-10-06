@@ -51,16 +51,14 @@ android {
 
 
 dependencies {
+    // Kakao maps sdk
+    implementation(files("libs/libDaumMapAndroid.jar"))
+
     // retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
-
-    // google map
-    implementation ("com.google.maps.android:maps-compose:2.11.4")
-
-    implementation ("com.google.android.gms:play-services-maps:18.1.0")
 
     // compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
