@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.nohjason.momori.component.button.ButtonType
 import com.nohjason.momori.component.button.MomoriButton
@@ -123,16 +124,15 @@ fun MainScreen() {
     if (isAllowLocationPermission)
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
-            cameraPositionState = cameraPositionState
+            cameraPositionState = cameraPositionState,
+            properties = MapProperties(
+                isTrafficEnabled = true,
+//                isBuildingEnabled = true,
+                isMyLocationEnabled = true,
+                isIndoorEnabled = true
+            )
         ) {
-            if (currentLocation != null)
-                Circle(
-                    center = currentLocation!!,
-                    fillColor = MomoriColor.Mint,
-                    radius = 10.0,
-                ) {
 
-                }
         }
         else
             Column {
