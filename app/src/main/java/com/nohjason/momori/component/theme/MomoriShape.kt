@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.dp
 class MomoriShape(
     val small: CornerBasedShape = RoundedCornerShape(5.dp),
     val medium: CornerBasedShape = RoundedCornerShape(10.dp),
-    val large: CornerBasedShape = RoundedCornerShape(20.dp)
+    val large: CornerBasedShape = RoundedCornerShape(15.dp)
 ) {
 
     fun copy(

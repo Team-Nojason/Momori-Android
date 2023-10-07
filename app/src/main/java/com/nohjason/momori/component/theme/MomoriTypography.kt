@@ -1,7 +1,9 @@
 package com.nohjason.momori.component.theme
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nohjason.momori.R
 import com.nohjason.momori.component.modifier.mmrClickable
@@ -230,7 +233,11 @@ fun Label(
 @Composable
 @Preview
 fun TypographyPreview() {
-    Column {
+    Column(
+        modifier = Modifier
+            .padding(10.dp)
+            .background(Color.White)
+    ) {
         Headline(text = "ㅎasdasdㅇ\nasdasdasd")
         Title(text = "ㅎasdasdㅇ\nasdasdasd")
         Body(text = "ㅎasdasdㅇ\nasdasdasd")

@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nohjason.momori.R
 import com.nohjason.momori.component.button.ButtonType
@@ -56,5 +57,13 @@ fun MomoriTopBar(
             Spacer(modifier = Modifier.weight(1f))
         }
         content()
+    }
+}
+
+@Preview
+@Composable
+fun TopBarPreview() {
+    MomoriTopBar(titleText = "장바구니", enablePrimaryButton = true) {
+
     }
 }

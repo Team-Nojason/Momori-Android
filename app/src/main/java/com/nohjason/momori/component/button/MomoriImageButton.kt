@@ -3,11 +3,15 @@ package com.nohjason.momori.component.button
 import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
@@ -32,28 +36,27 @@ import com.nohjason.momori.ui.theme.MomoriTheme
 import com.nohjason.momori.util.TAG
 
 @Composable
-fun MomoriIconButton(
+fun MomoriImageButton(
     modifier: Modifier = Modifier,
     @DrawableRes iconId: Int,
     contentDescription: String = "",
     size: Dp = 20.dp,
     enable: Boolean = true,
-    shape: Shape = CircleShape,
+    shape: Shape = MomoriTheme.shape.medium,
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,
     contentPadding: PaddingValues = ButtonDefaults.TextButtonContentPadding,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    color: Color? = null,
     flipX: Boolean = false,
     flipY: Boolean = false,
-    type: ButtonType,
+    type: ButtonType = ButtonType.Transparent,
     onClick: () -> Unit
 ) {
     Box {
         MomoriButton(
             onClick = onClick,
             modifier = modifier
-                .size(size * 2),
+                .size(size),
             type = type,
             enabled = enable,
             shape = shape,
@@ -62,13 +65,11 @@ fun MomoriIconButton(
             contentPadding = contentPadding,
             interactionSource = interactionSource
         )
-        Icon(
+        Image(
             painter = painterResource(id = iconId),
             contentDescription = contentDescription,
-            tint = color.let { color }?: contentColorFor(type.buttonColor),
             modifier = Modifier
                 .size(size)
-                .offset(x = (size.div(2)), y = size.div(2))
                 .graphicsLayer(
                     scaleY = if (flipY) -1f else 1f,
                     scaleX = if (flipX) -1f else 1f
@@ -79,10 +80,19 @@ fun MomoriIconButton(
 
 @Composable
 @Preview
-fun IconButtonPreview() {
-    Box(modifier = Modifier.background(Color.White)) {
-        MomoriIconButton(iconId = R.drawable.ic_back, type = ButtonType.Transparent, size = 100.dp) {
-            Log.d(TAG, "IconButtonPreview: Transparent Icon Button")
+fun ImageButtonPreview() {
+    Row {
+        MomoriImageButton(iconId = R.drawable.google, size = 50.dp) {
+            Log.d(TAG, "IconButtonPreview: Google Image Button")
+        }
+        Spacer(modifier = Modifier.padding(horizontal = 10.dp))
+        MomoriImageButton(iconId = R.drawable.kaka, size = 50.dp) {
+            Log.d(TAG, "ImageButtonPreview: Kakao Image Button")
+        }
+        Spacer(modifier = Modifier.padding(horizontal = 10.dp))
+        MomoriImageButton(iconId = R.drawable.naver, size = 50.dp) {
+            Log.d(TAG, "ImageButtonPreview: Kakao Image Button")
         }
     }
+
 }

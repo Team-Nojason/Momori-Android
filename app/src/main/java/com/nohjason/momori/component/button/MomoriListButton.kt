@@ -1,8 +1,10 @@
 package com.nohjason.momori.component.button
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -87,6 +89,15 @@ fun MomoriListButton(
 @Preview
 @Composable
 fun ListButtonPreview() {
-    MomoriListButton(onClick = { /*TODO*/ }, text = "로그아웃", type = ListButtonType.Red)
+    Column(
+        Modifier.background(Color.White)
+    ) {
+        MomoriListButton(onClick = { /*TODO*/ }, text = "gd", type = ListButtonType.Normal)
+        MomoriListButton(onClick = { /*TODO*/ }, text = "gdg", type = ListButtonType.Normal)
+        MomoriListButton(onClick = { /*TODO*/ }, text = "qweqwe", type = ListButtonType.Normal)
+        MomoriListButton(onClick = { /*TODO*/ }, text = "asdff", type = ListButtonType.Normal)
+        MomoriListButton(onClick = { /*TODO*/ }, text = "로그아웃", type = ListButtonType.Red)
+
+    }
 
 }

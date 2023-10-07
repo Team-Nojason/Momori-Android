@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
 
+// clickable & ripple & bounded
 fun Modifier.mmrClickable(
     interactionSource: MutableInteractionSource = MutableInteractionSource(),
     rippleColor: Color = Color.Unspecified,
