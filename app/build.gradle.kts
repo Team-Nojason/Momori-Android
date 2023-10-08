@@ -5,14 +5,6 @@ plugins {
 }
 
 android {
-    signingConfigs {
-        getByName("debug") {
-            storeFile = file("C:\\Users\\USER\\Desktop\\nojason.jks")
-            storePassword = "nojason"
-            keyAlias = "nojason"
-            keyPassword = "nojason"
-        }
-    }
     namespace = "com.nohjason.momori"
     compileSdk = 33
 
