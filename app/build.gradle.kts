@@ -7,9 +7,9 @@ plugins {
 android {
     signingConfigs {
         getByName("debug") {
-            storeFile = file("C:\\Users\\USER\\Desktop\\momori.jks")
+            storeFile = file("C:\\Users\\USER\\Desktop\\nojason.jks")
             storePassword = "nojason"
-            keyAlias = "key0"
+            keyAlias = "nojason"
             keyPassword = "nojason"
         }
     }
@@ -59,6 +59,9 @@ android {
 
 
 dependencies {
+
+    // kakao
+    implementation ("com.kakao.sdk:v2-common:2.8.3")
     implementation ("com.kakao.maps.open:android:2.6.0")
 
     // retrofit
