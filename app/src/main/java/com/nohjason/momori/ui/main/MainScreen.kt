@@ -110,8 +110,6 @@ fun MainScreen() {
 
     LaunchedEffect(true) {
         requestPermissions(context, locationPermissions, launcherMultiplePermissions)
-
-        getHashKey(context)
     }
 
     // view
@@ -153,25 +151,4 @@ fun MainScreen() {
                     )
                 }
             }
-}
-
-
-private fun getHashKey(context: Context) {
-    var packageInfo: PackageInfo? = null
-    try {
-        packageInfo =
-            context.packageManager.getPackageInfo(context.packageName, PackageManager.GET_SIGNATURES)
-    } catch (e: PackageManager.NameNotFoundException) {
-        e.printStackTrace()
-    }
-    if (packageInfo == null) Log.e("KeyHash", "KeyHash:null")
-    for (signature in packageInfo!!.signatures) {
-        try {
-            val md = MessageDigest.getInstance("SHA")
-            md.update(signature.toByteArray())
-            Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT))
-        } catch (e: NoSuchAlgorithmException) {
-            Log.e("KeyHash", "Unable to get MessageDigest. signature=$signature", e)
-        }
-    }
 }
