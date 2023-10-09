@@ -2,22 +2,34 @@ package com.nohjason.momori.ui.main
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Color
+import android.graphics.Paint.Align
 import android.os.Looper
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Box
+//import androidx.compose.foundation.layout.BoxScopeInstance.align
+//import androidx.compose.foundation.layout.BoxScopeInstance.align
+//import androidx.compose.foundation.layout.BoxScopeInstance.align
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationCallback
@@ -26,18 +38,12 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
-import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.MapView
-import com.kakao.vectormap.camera.CameraUpdateFactory
-import com.kakao.vectormap.shape.DimScreenLayer
-import com.kakao.vectormap.shape.DotPoints
-import com.kakao.vectormap.shape.Polygon
-import com.kakao.vectormap.shape.PolygonOptions
-import com.kakao.vectormap.shape.PolygonStyle
-import com.kakao.vectormap.shape.ShapeManager
 import com.nohjason.momori.component.button.ButtonType
 import com.nohjason.momori.component.button.MomoriButton
+import com.nohjason.momori.component.button.MomoriIconButton
+import com.nohjason.momori.component.overlay.MomoriFlashOverlay
 import com.nohjason.momori.util.PermissionUtil.requestPermissions
 import com.nohjason.momori.util.TAG
 
@@ -47,30 +53,10 @@ private val locationPermissions = arrayOf(
     Manifest.permission.ACCESS_FINE_LOCATION
 )
 
-private lateinit var dimScreenLayer: DimScreenLayer
-private lateinit var shapeManager: ShapeManager
-
-var circleList = arrayListOf<Polygon>()
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
     val context = LocalContext.current
-
-    val coroutine = rememberCoroutineScope()
-
-    var currentLocation by remember {
-        mutableStateOf<LatLng?>(null)
-    }
-
-    LaunchedEffect(currentLocation) {
-
-
-            val circles = getDimCirclePolyline(currentLocation?: return@LaunchedEffect, 133, 30)
-            circleList.forEach {
-                shapeManager.layer.remove(it)
-            }
-            circleList = circles
-    }
 
     /**
      * 권한
@@ -91,21 +77,29 @@ fun MainScreen() {
      * 위치 조회
      */
     // 내 위치 조회 요청 클라이언트
-    val fusedLocationClient by remember { mutableStateOf(LocationServices.getFusedLocationProviderClient(context)) }
+    val fusedLocationClient by remember {
+        mutableStateOf(
+            LocationServices.getFusedLocationProviderClient(
+                context
+            )
+        )
+    }
 
 
     // 마지막 위치 불러오는 함수
     val locationCallback = object : LocationCallback() {
         override fun onLocationResult(locations: LocationResult) {
             for (location in locations.locations) {
-                currentLocation = LatLng.from(location.latitude, location.longitude)
-                Log.d(TAG, "w - ${location.latitude} g - ${location.longitude} - onLocationResult() called")
+                Log.d(
+                    TAG,
+                    "w - ${location.latitude} g - ${location.longitude} - onLocationResult() called"
+                )
             }
         }
     }
 
-    fun getAllowLocationPermission()
-    = ActivityCompat.checkSelfPermission(
+
+    fun getAllowLocationPermission() = ActivityCompat.checkSelfPermission(
         context,
         Manifest.permission.ACCESS_FINE_LOCATION
     ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
@@ -138,84 +132,88 @@ fun MainScreen() {
     LaunchedEffect(true) {
         requestPermissions(context, locationPermissions, launcherMultiplePermissions)
     }
-
     // view
     if (isAllowLocationPermission)
-        AndroidView(
-            modifier = Modifier.fillMaxSize(),
-            factory = { context ->
-                val mapView = MapView(context)
-                mapView.start(object : MapLifeCycleCallback() {
-                    override fun onMapDestroy() {
-                        // 지도 API 가 정상적으로 종료될 때 호출됨
-                        Log.d(TAG, " - onMapDestroy() called")
-                    }
+        MomoriFlashOverlay(radius = 133.dp) {
+            AndroidView(
+                modifier = Modifier.fillMaxSize(),
+                factory = { context ->
+                    val a = MapView(context)
+                    a.start(object : MapLifeCycleCallback() {
+                        override fun onMapDestroy() {
+                            // 지도 API 가 정상적으로 종료될 때 호출됨
+                            Log.d(TAG, " - onMapDestroy() called")
+                        }
 
-                    override fun onMapError(error: Exception) {
-                        // 인증 실패 및 지도 사용 중 에러가 발생할 때 호출됨
-                        Log.d(TAG, "${error} - onMapError() called")
-                    }
-                }, object : KakaoMapReadyCallback() {
-                    override fun onMapReady(kakaoMap: KakaoMap) {
-                        // 인증 후 API 가 정상적으로 실행될 때 호출됨
-                        Log.d(TAG, " - onMapReady() called")
-
-                        dimScreenLayer = kakaoMap.dimScreenManager?.dimScreenLayer!!
-                        shapeManager = kakaoMap.shapeManager!!
-
-                        dimScreenLayer.setVisible(true)
-
-                        val dgsw = LatLng.from(35.6632493, 128.4141269)
-                        val dgswPoints = CameraUpdateFactory.newCenterPosition(dgsw)
-                        kakaoMap.moveCamera(dgswPoints)
-
-                        val arr = getDimCirclePolyline(dgsw, 250, 60)
-                        circleList = arr
-                    }
-                })
-                mapView
-            },
-        )
-        else
-            Column {
-                MomoriButton(
-                    text = "권한 요청",
-                    type = ButtonType.Mint
-                ) {
-                    requestPermissions(
-                        context,
-                        locationPermissions,
-                        launcherMultiplePermissions
-                    )
-                }
+                        override fun onMapError(error: Exception) {
+                            // 인증 실패 및 지도 사용 중 에러가 발생할 때 호출됨
+                            Log.d(TAG, "${error} - onMapError() called")
+                        }
+                    }, object : KakaoMapReadyCallback() {
+                        override fun onMapReady(kakaoMap: KakaoMap) {
+                            // 인증 후 API 가 정상적으로 실행될 때 호출됨
+                            Log.d(TAG, " - onMapReady() called")
+                        }
+                    });
+                    a
+                },
+            )
+        }
+    else
+        Column {
+            MomoriButton(
+                text = "권한 요청",
+                type = ButtonType.Mint
+            ) {
+                requestPermissions(
+                    context,
+                    locationPermissions,
+                    launcherMultiplePermissions
+                )
             }
-}
+        }
+    Box (
+        modifier = Modifier
+            .padding(bottom = 20.dp)
+    ){
+        Row (modifier = Modifier
+            .align(Alignment.BottomCenter)
+        ){
+            MomoriButton(
+                type = ButtonType.DarkGray,
+                modifier = Modifier
+                    .height(42.dp)
+                    .width(62.dp)
+            ) {
 
-private const val dimScreenLayerOpacity = 95.0f
+            }
+            MomoriButton(
+                type = ButtonType.Mint,
+                modifier = Modifier
+                    .padding(start = 50.dp, end = 50.dp)
+                    .height(42.dp)
+                    .width(62.dp)
+            ) {
 
-private fun getDimCirclePolyline(
-    latLng: LatLng,
-    radius: Int,
-    stroke: Int
-): ArrayList<Polygon> {
-    val arr = arrayListOf<Polygon>()
+            }
+            MomoriButton(
+                type = ButtonType.Gray,
+                modifier = Modifier
+                    .height(42.dp)
+                    .width(62.dp)
+            ) {
 
-    var options: PolygonOptions = PolygonOptions.from(DotPoints.fromCircle(LatLng.from(latLng.latitude, latLng.longitude), radius.toFloat()), PolygonStyle.from(Color.TRANSPARENT))
-    val circle = dimScreenLayer.addPolygon(options)
-    arr.add(circle!!)
-
-    val innerRadius: Int = radius - stroke
-
-    for (i in innerRadius..radius) {
-        options = PolygonOptions.from(
-            DotPoints.fromCircle(
-                LatLng.from(latLng.latitude, latLng.longitude), i.toFloat()
-            ).setHoleCircle(i - 1.0f),
-            PolygonStyle.from(Color.argb(((i - innerRadius).toFloat() / (stroke).toFloat() * dimScreenLayerOpacity).toInt(), 0, 0, 0)) // 0 ~ 63
-        )
-
-        val polyline = shapeManager.layer.addPolygon(options)
-        arr.add(polyline)
+            }
+        }
+//        FloatingActionButton(
+//            modifier = Modifier
+//                .align(Alignment.BottomCenter)
+//                .width(62.dp)
+//                .height(42.dp)
+//            ,
+//            onClick = { /*TODO*/ },
+//        ) {
+//
+//        }
     }
-    return arr
 }
