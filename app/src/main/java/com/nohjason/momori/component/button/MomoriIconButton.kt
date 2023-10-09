@@ -6,18 +6,17 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
@@ -26,9 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.nohjason.momori.R
-import com.nohjason.momori.component.theme.MomoriColor
 import com.nohjason.momori.component.theme.contentColorFor
-import com.nohjason.momori.ui.theme.MomoriTheme
 import com.nohjason.momori.util.TAG
 
 @Composable
@@ -80,9 +77,31 @@ fun MomoriIconButton(
 @Composable
 @Preview
 fun IconButtonPreview() {
-    Box(modifier = Modifier.background(Color.White)) {
-        MomoriIconButton(iconId = R.drawable.ic_back, type = ButtonType.Transparent, size = 100.dp) {
+    Column(modifier = Modifier.background(Color.White)) {
+        MomoriIconButton(
+            iconId = R.drawable.ic_back,
+            type = ButtonType.Transparent,
+            size = 100.dp) {
             Log.d(TAG, "IconButtonPreview: Transparent Icon Button")
+        }
+        MomoriIconButton(
+            iconId = R.drawable.ic_back,
+            type = ButtonType.Gray,
+            size = 100.dp) {
+            Log.d(TAG, "IconButtonPreview: Transparent Icon Button")
+        }
+        MomoriIconButton(
+            iconId = R.drawable.ic_back,
+            type = ButtonType.Mint,
+            size = 100.dp) {
+            Log.d(TAG, "IconButtonPreview: Transparent Icon Button")
+        }
+        MomoriButton(type = ButtonType.Mint, onClick = {
+            // click 했을때
+        })
+
+        MomoriButton(type = ButtonType.Mint) {
+            // click했을때
         }
     }
 }

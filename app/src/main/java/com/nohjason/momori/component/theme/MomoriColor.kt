@@ -35,6 +35,7 @@ fun contentColorFor(backgroundColor: Color) =
         MomoriColor.Transparent -> MomoriColor.Black
         MomoriColor.White -> MomoriColor.Black
         MomoriColor.Gray100 -> MomoriColor.Black
+        MomoriColor.Mint -> MomoriColor.Black
         else -> MomoriColor.White
     }
 
