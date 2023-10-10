@@ -29,6 +29,7 @@ sealed class ButtonType(val buttonColor: Color, val disableColor: Color = Momori
     object DarkGray: ButtonType(buttonColor = MomoriColor.Gray700)
     object White: ButtonType(buttonColor = MomoriColor.White)
     object Transparent: ButtonType(buttonColor = MomoriColor.Transparent)
+    object Red: ButtonType(buttonColor = MomoriColor.Red)
 }
 
 @Composable
