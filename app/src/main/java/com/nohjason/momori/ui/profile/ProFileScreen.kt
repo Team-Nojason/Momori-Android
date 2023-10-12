@@ -26,6 +26,17 @@ fun ProFile() {
             modifier = Modifier
                 .fillMaxSize()
         ) {
+            Column (
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ){
+                Image(painter = painterResource(R.drawable.rectangle), contentDescription = null)
+                MomoriImageButton(
+                    iconId = R.drawable.naver,
+                    modifier = Modifier.align(Alignment.End)
+                    ) {
+
+                }
+            }
             Row (
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
