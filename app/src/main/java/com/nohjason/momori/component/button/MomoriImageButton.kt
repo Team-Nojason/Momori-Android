@@ -5,6 +5,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -25,11 +26,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.nohjason.momori.R
+import com.nohjason.momori.component.modifier.mmrClickable
 import com.nohjason.momori.component.theme.MomoriColor
 import com.nohjason.momori.component.theme.contentColorFor
 import com.nohjason.momori.ui.theme.MomoriTheme
@@ -40,12 +43,13 @@ fun MomoriImageButton(
     modifier: Modifier = Modifier,
     @DrawableRes iconId: Int,
     contentDescription: String = "",
-    size: Dp = 20.dp,
+    size: Dp = Dp.Unspecified,
     enable: Boolean = true,
     shape: Shape = MomoriTheme.shape.medium,
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,
     contentPadding: PaddingValues = ButtonDefaults.TextButtonContentPadding,
+    contentScale: ContentScale = ContentScale.Fit,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     flipX: Boolean = false,
     flipY: Boolean = false,
@@ -53,27 +57,21 @@ fun MomoriImageButton(
     onClick: () -> Unit
 ) {
     Box {
-        MomoriButton(
-            onClick = onClick,
-            modifier = modifier
-                .size(size),
-            type = type,
-            enabled = enable,
-            shape = shape,
-            elevation = elevation,
-            border = border,
-            contentPadding = contentPadding,
-            interactionSource = interactionSource
-        )
         Image(
             painter = painterResource(id = iconId),
             contentDescription = contentDescription,
+            contentScale = contentScale,
             modifier = Modifier
                 .size(size)
                 .graphicsLayer(
                     scaleY = if (flipY) -1f else 1f,
                     scaleX = if (flipX) -1f else 1f
                 )
+                .mmrClickable(
+                    rippleEnable = false
+                ) {
+                    onClick()
+                }
         )
     }
 }

@@ -18,19 +18,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.zIndex
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -44,8 +51,11 @@ import com.nohjason.momori.component.button.ButtonType
 import com.nohjason.momori.component.button.MomoriButton
 import com.nohjason.momori.component.button.MomoriIconButton
 import com.nohjason.momori.component.overlay.MomoriFlashOverlay
+import com.nohjason.momori.component.theme.Body
+import com.nohjason.momori.ui.setting.SettingScreen
 import com.nohjason.momori.util.PermissionUtil.requestPermissions
 import com.nohjason.momori.util.TAG
+import kotlinx.coroutines.launch
 
 
 private val locationPermissions = arrayOf(
@@ -123,6 +133,10 @@ fun MainScreen() {
         )
     }
 
+    val scope = rememberCoroutineScope()
+    val sheetState = rememberModalBottomSheetState()
+    var showBottomSheet by remember { mutableStateOf(false) }
+
     LaunchedEffect(isAllowLocationPermission) {
         if (isAllowLocationPermission) {
             locationUpdate()
@@ -133,7 +147,8 @@ fun MainScreen() {
         requestPermissions(context, locationPermissions, launcherMultiplePermissions)
     }
     // view
-    if (isAllowLocationPermission)
+//    if (isAllowLocationPermission)
+    Box {
         MomoriFlashOverlay(radius = 133.dp) {
             AndroidView(
                 modifier = Modifier.fillMaxSize(),
@@ -159,33 +174,17 @@ fun MainScreen() {
                 },
             )
         }
-    else
-        Column {
-            MomoriButton(
-                text = "권한 요청",
-                type = ButtonType.Mint
-            ) {
-                requestPermissions(
-                    context,
-                    locationPermissions,
-                    launcherMultiplePermissions
-                )
-            }
-        }
-    Box (
-        modifier = Modifier
-            .padding(bottom = 20.dp)
-    ){
         Row (modifier = Modifier
             .align(Alignment.BottomCenter)
+            .padding(bottom = 20.dp)
         ){
             MomoriButton(
                 type = ButtonType.DarkGray,
                 modifier = Modifier
                     .height(42.dp)
-                    .width(62.dp)
+                    .width(62.dp),
             ) {
-
+                showBottomSheet = true
             }
             MomoriButton(
                 type = ButtonType.Mint,
@@ -205,15 +204,29 @@ fun MainScreen() {
 
             }
         }
-//        FloatingActionButton(
-//            modifier = Modifier
-//                .align(Alignment.BottomCenter)
-//                .width(62.dp)
-//                .height(42.dp)
-//            ,
-//            onClick = { /*TODO*/ },
-//        ) {
-//
-//        }
+        if (showBottomSheet) {
+            ModalBottomSheet(
+                onDismissRequest = {
+                    showBottomSheet = false
+                },
+                sheetState = sheetState
+            ) {
+//                // Sheet content
+//                Button(
+//                    modifier = Modifier.padding(bottom = 100.dp),
+//                    onClick = {
+//                    scope.launch {
+//                        sheetState.hide()
+//                    }.invokeOnCompletion {
+//                        if (!sheetState.isVisible) {
+//                            showBottomSheet = false
+//                        }
+//                    }
+//                }) {
+//                    Text("Hide bottom sheet")
+//                }
+                SettingScreen()
+            }
+        }
     }
 }

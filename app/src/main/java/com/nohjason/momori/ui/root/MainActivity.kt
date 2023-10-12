@@ -13,6 +13,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.kakao.sdk.common.util.Utility
 import com.nohjason.momori.ui.main.MainScreen
+import com.nohjason.momori.ui.onboard.OnBoardScreen
+import com.nohjason.momori.ui.profile.ProFile
 import com.nohjason.momori.ui.theme.MomoriTheme
 import com.nohjason.momori.util.TAG
 import java.security.MessageDigest
@@ -30,8 +32,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ){
 //                    OnBoardScreen()
-                    MainScreen()
-                    //wowowowowowowowoo
+//                    MainScreen()
+                    ProFile()
                 }
             }
         }
