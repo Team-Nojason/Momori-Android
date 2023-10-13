@@ -40,7 +40,10 @@ fun MomoriButton(
     type: ButtonType,
     enabled: Boolean = true,
     shape: Shape = MomoriTheme.shape.medium,
-    elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
+    elevation: ButtonElevation? = ButtonDefaults.buttonElevation(
+        defaultElevation = 4.dp,
+        pressedElevation = 6.dp
+    ),
     border: BorderStroke? = null,
     contentPadding: PaddingValues = ButtonDefaults.TextButtonContentPadding,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },

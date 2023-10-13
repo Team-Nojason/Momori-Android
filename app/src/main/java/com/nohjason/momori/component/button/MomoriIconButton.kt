@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -36,7 +35,6 @@ fun MomoriIconButton(
     size: Dp = 20.dp,
     enable: Boolean = true,
     shape: Shape = CircleShape,
-    elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,
     contentPadding: PaddingValues = ButtonDefaults.TextButtonContentPadding,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -54,7 +52,6 @@ fun MomoriIconButton(
             type = type,
             enabled = enable,
             shape = shape,
-            elevation = elevation,
             border = border,
             contentPadding = contentPadding,
             interactionSource = interactionSource
