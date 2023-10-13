@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.nohjason.momori.component.button.ButtonType
 import com.nohjason.momori.component.button.MomoriButton
-import com.nohjason.momori.component.theme.Body
+import com.nohjason.momori.component.theme.Label
 import com.nohjason.momori.component.theme.MomoriColor
 import com.nohjason.momori.component.theme.Title
 import com.nohjason.momori.ui.theme.MomoriTheme
@@ -47,31 +47,27 @@ fun MomoriDialog(
                     color = MomoriColor.White,
                     shape = MomoriTheme.shape.medium,
                 )
-                .padding(
-                    top = 16.dp,
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 16.dp,
-                ),
+                .padding(vertical = 16.dp, horizontal = 16.dp)
+            ,
         ) {
             Title(text = title, modifier = Modifier.align(Alignment.CenterHorizontally))
             description?.let {
-                Body(
+                Label(
                     text = it,
                     textColor = MomoriColor.Gray300,
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
-                        .padding(top = 12.dp)
+                        .padding(top = 16.dp)
                 )
             }
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = arrangement,
             ) { 
                 secondaryButton?.let {
                     it()
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.width(12.dp))
                 }
                 primaryButton()
             }

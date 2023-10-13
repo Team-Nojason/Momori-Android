@@ -1,9 +1,6 @@
 package com.nohjason.momori.ui.root
 
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Base64
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,12 +10,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.kakao.sdk.common.util.Utility
 import com.nohjason.momori.ui.main.MainScreen
-import com.nohjason.momori.ui.onboard.OnBoardScreen
-import com.nohjason.momori.ui.profile.ProFile
 import com.nohjason.momori.ui.theme.MomoriTheme
 import com.nohjason.momori.util.TAG
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +25,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ){
 //                    OnBoardScreen()
-//                    MainScreen()
-                    ProFile()
+                    MainScreen()
+//                    ProFile()
                 }
             }
         }

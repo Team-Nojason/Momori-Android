@@ -78,7 +78,7 @@ object MomoriTypography {
         fontFamily = notoSans,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
-        lineHeight = 14.sp,
+        lineHeight = 16.sp,
         platformStyle = PlatformTextStyle(
             includeFontPadding = false
         )

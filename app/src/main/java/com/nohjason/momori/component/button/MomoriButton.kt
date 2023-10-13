@@ -29,6 +29,7 @@ sealed class ButtonType(val buttonColor: Color, val disableColor: Color = Momori
     object DarkGray: ButtonType(buttonColor = MomoriColor.Gray700)
     object White: ButtonType(buttonColor = MomoriColor.White)
     object Transparent: ButtonType(buttonColor = MomoriColor.Transparent)
+    object TransparentLight: ButtonType(buttonColor = MomoriColor.Transparent)
     object Red: ButtonType(buttonColor = MomoriColor.Red)
 }
 
@@ -45,13 +46,15 @@ fun MomoriButton(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onClick: () -> Unit,
 ) {
+    var contentColor = contentColorFor(backgroundColor = type.buttonColor)
+    if (type == ButtonType.TransparentLight) contentColor = MomoriColor.Gray300
     Button(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
         shape = shape,
         colors = ButtonDefaults.buttonColors(
-                contentColor = contentColorFor(type.buttonColor),
+                contentColor = contentColor,
                 containerColor = type.buttonColor,
                 disabledContentColor = contentColorFor(type.disableColor),
                 disabledContainerColor = type.disableColor

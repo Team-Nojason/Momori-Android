@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.nohjason.momori.R
+import com.nohjason.momori.component.modifier.mmrClickable
 import com.nohjason.momori.ui.theme.MomoriTheme
 import com.nohjason.momori.util.TAG
 
