@@ -34,19 +34,14 @@ fun MomoriImageButton(
     @DrawableRes iconId: Int,
     contentDescription: String = "",
     size: Dp = Dp.Unspecified,
-    enable: Boolean = true,
-    shape: Shape = MomoriTheme.shape.medium,
-    elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
-    border: BorderStroke? = null,
-    contentPadding: PaddingValues = ButtonDefaults.TextButtonContentPadding,
     contentScale: ContentScale = ContentScale.Fit,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     flipX: Boolean = false,
     flipY: Boolean = false,
-    type: ButtonType = ButtonType.Transparent,
     onClick: () -> Unit
 ) {
-    Box {
+    Box(
+        modifier = modifier
+    ) {
         Image(
             painter = painterResource(id = iconId),
             contentDescription = contentDescription,
