@@ -4,14 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.takeOrElse
 
 object MomoriColor {
 
     val White = Color(0xFFFFFFFF)
     val Black = Color(0xFF000000)
 
-    val Mint = Color(0xFF01FFC2)
+    val Mint = Color(0xFF07F6BD)
 
     val Red = Color(0xFFF31E2B)
 
@@ -35,7 +34,6 @@ fun contentColorFor(backgroundColor: Color) =
         MomoriColor.Transparent -> MomoriColor.Black
         MomoriColor.White -> MomoriColor.Black
         MomoriColor.Gray100 -> MomoriColor.Black
-        MomoriColor.Mint -> MomoriColor.Black
         else -> MomoriColor.White
     }
 
