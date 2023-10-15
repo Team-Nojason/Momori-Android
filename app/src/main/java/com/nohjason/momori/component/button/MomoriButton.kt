@@ -62,7 +62,7 @@ fun MomoriButton(
                 disabledContentColor = contentColorFor(type.disableColor),
                 disabledContainerColor = type.disableColor
             ),
-        elevation = elevation,
+        elevation = if (type != ButtonType.Transparent) elevation else ButtonDefaults.buttonElevation(),
         border = border,
         contentPadding = contentPadding,
         interactionSource = interactionSource,
