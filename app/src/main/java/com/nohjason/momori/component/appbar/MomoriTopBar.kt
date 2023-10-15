@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,6 +29,7 @@ fun MomoriTopBar(
     titleText: String,
     enablePrimaryButton: Boolean = false,
     primaryButtonCallback: () -> Unit = {},
+    secondaryContent: @Composable RowScope.() -> Unit = {},
     @DrawableRes primaryIconId: Int = R.drawable.ic_back,
     color: Color = MomoriColor.White,
     content: @Composable ColumnScope.() -> Unit,
@@ -46,7 +48,6 @@ fun MomoriTopBar(
             Spacer(modifier = Modifier.width(8.dp))
             if (enablePrimaryButton)
                 MomoriIconButton(
-                    modifier = Modifier,
                     iconId = primaryIconId,
                     contentDescription = "to back",
                     onClick = primaryButtonCallback,
@@ -55,6 +56,8 @@ fun MomoriTopBar(
             Spacer(modifier = Modifier.width(8.dp))
             Title(text = titleText)
             Spacer(modifier = Modifier.weight(1f))
+            secondaryContent()
+            Spacer(modifier = Modifier.width(8.dp))
         }
         content()
     }
@@ -62,8 +65,20 @@ fun MomoriTopBar(
 
 @Preview
 @Composable
-fun TopBarPreview() {
+fun TopBarPrevie1() {
     MomoriTopBar(titleText = "장바구니", enablePrimaryButton = true) {
+
+    }
+}
+
+@Preview
+@Composable
+fun TopBarPreview2() {
+    MomoriTopBar(titleText = "글 올리기", enablePrimaryButton = true, secondaryContent = {
+        MomoriIconButton(iconId = R.drawable.ic_post, type = ButtonType.Transparent) {
+
+        }
+    }) {
 
     }
 }
