@@ -1,0 +1,65 @@
+package com.nohjason.momori.ui.upload
+
+import android.util.Log
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+//import androidx.compose.foundation.layout.BoxScopeInstance.align
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import com.nohjason.momori.R
+import com.nohjason.momori.component.appbar.MomoriTopBar
+import com.nohjason.momori.component.button.MomoriImageButton
+
+@Composable
+fun UpLoadScreen() {
+    val width = 20.dp
+    val height = 20.dp
+
+    Column {
+        MomoriTopBar(titleText = "추억 저장", secondaryContent = {
+            MomoriImageButton(iconId = R.drawable.ic_post) {
+                Log.d("wow", "click")
+            }
+            Spacer(modifier = Modifier.width(10.dp))
+            MomoriImageButton(iconId = R.drawable.ic_cancel) {
+                Log.d("wow", "click")
+            }
+        }) {
+            Box{
+                Image(
+                    painter = painterResource(R.drawable.ic_launcher_background),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 50.dp)
+                        .aspectRatio(16 / 9f),
+                    contentScale = ContentScale.FillBounds
+                )
+                MomoriImageButton(
+                    width = width,
+                    height = height,
+                    iconId = R.drawable.naver,
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(end = 50.dp)
+                        .offset(x = width / 2, y = -height / 2)
+                ) {
+
+                }
+
+            }
+        }
+    }
+}
