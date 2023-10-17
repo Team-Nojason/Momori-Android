@@ -56,9 +56,8 @@ fun UpLoadScreen() {
                         .padding(end = 50.dp)
                         .offset(x = width / 2, y = -height / 2)
                 ) {
-
+                    Log.d("mom", "click")
                 }
-
             }
         }
     }
