@@ -26,6 +26,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
@@ -60,7 +61,6 @@ import com.nohjason.momori.component.button.MomoriIconButton
 import com.nohjason.momori.component.dialog.MomoriDialog
 import com.nohjason.momori.component.theme.MomoriColor
 import com.nohjason.momori.ui.root.key.Key
-import com.nohjason.momori.ui.root.key.KeyArray
 import com.nohjason.momori.ui.setting.SettingScreen
 import com.nohjason.momori.ui.theme.MomoriTheme
 import com.nohjason.momori.util.PermissionUtil.requestPermissions
@@ -84,7 +84,7 @@ fun MainScreen(navController: NavController,) {
      * 권한
      */
     // 위치 권한이 있는가
-    var isAllowLocationPermission by remember { mutableStateOf(false) }
+    var isAllowLocationPermission by rememberSaveable { mutableStateOf(false) }
 
     // 권한 결과 처리
     val launcherMultiplePermissions = rememberLauncherForActivityResult(
