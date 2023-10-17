@@ -2,6 +2,7 @@ package com.nohjason.momori.ui.setting
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.nohjason.momori.component.appbar.MomoriTopBar
 import com.nohjason.momori.component.button.ListButtonType
 import com.nohjason.momori.component.button.MomoriListButton
@@ -9,10 +10,13 @@ import com.nohjason.momori.component.list.DividerType
 import com.nohjason.momori.component.list.MomoriDivier
 
 @Composable
-fun SettingScreen() {
+fun SettingScreen(
+    navController: NavController,
+) {
     MomoriTopBar(
         titleText = "설정",
-        enablePrimaryButton = true
+        enablePrimaryButton = true,
+        primaryButtonCallback = {}
     ) {
         MomoriListButton(onClick = { /*TODO*/ }, text = "내 계정")
         MomoriListButton(onClick = { /*TODO*/ }, text = "개인정보 수집 및 이용 약관")
@@ -21,8 +25,8 @@ fun SettingScreen() {
     }
 }
 
-@Composable
-@Preview
-fun SettingPreview() {
-    SettingScreen()
-}
+//@Composable
+//@Preview
+//fun SettingPreview() {
+//    SettingScreen()
+//}

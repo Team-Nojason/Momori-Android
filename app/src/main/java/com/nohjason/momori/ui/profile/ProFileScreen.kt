@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.nohjason.momori.R
 import com.nohjason.momori.component.appbar.MomoriTopBar
 import com.nohjason.momori.component.button.MomoriImageButton
@@ -26,7 +27,9 @@ import com.nohjason.momori.component.theme.Label
 import com.nohjason.momori.component.theme.MomoriColor
 
 @Composable
-fun ProFileScreen() {
+fun ProFileScreen(
+    navController: NavController,
+) {
     MomoriTopBar(titleText = "프로필") {
         Column(
             modifier = Modifier

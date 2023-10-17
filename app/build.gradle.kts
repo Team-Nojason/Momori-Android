@@ -54,6 +54,10 @@ dependencies {
     // nav
     implementation("androidx.navigation:navigation-compose:2.5.3")
 
+    // navigation
+    val nav_version = "2.5.3"
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+
     // kakao
     implementation ("com.kakao.sdk:v2-common:2.8.3")
     implementation ("com.kakao.maps.open:android:2.6.0")

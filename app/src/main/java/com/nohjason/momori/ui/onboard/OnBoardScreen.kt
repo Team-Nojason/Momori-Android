@@ -36,13 +36,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.nohjason.momori.R
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OnBoardScreen(
-    viewModel: OnBoardViewModel = viewModel()
+    viewModel: OnBoardViewModel = viewModel(),
+    navController: NavController
 ) {
 //    val imageModifier = Modifier
 //        .size(50.dp)

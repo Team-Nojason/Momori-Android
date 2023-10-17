@@ -1,9 +1,5 @@
 package com.nohjason.momori.ui.main
 
-//import androidx.compose.foundation.layout.BoxScopeInstance.align
-//import androidx.compose.foundation.layout.BoxScopeInstance.align
-//import androidx.compose.foundation.layout.BoxScopeInstance.align
-
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -37,6 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
+import androidx.navigation.NavController
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -62,11 +59,12 @@ import com.nohjason.momori.component.button.MomoriButton
 import com.nohjason.momori.component.button.MomoriIconButton
 import com.nohjason.momori.component.dialog.MomoriDialog
 import com.nohjason.momori.component.theme.MomoriColor
+import com.nohjason.momori.ui.root.key.Key
+import com.nohjason.momori.ui.root.key.KeyArray
 import com.nohjason.momori.ui.setting.SettingScreen
 import com.nohjason.momori.ui.theme.MomoriTheme
 import com.nohjason.momori.util.PermissionUtil.requestPermissions
 import com.nohjason.momori.util.TAG
-
 
 private val locationPermissions = arrayOf(
     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -75,7 +73,7 @@ private val locationPermissions = arrayOf(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavController,) {
     val context = LocalContext.current
     var currentLocation by remember {
         mutableStateOf<LatLng?>(null)
@@ -197,7 +195,7 @@ fun MainScreen() {
             },
             sheetState = sheetState
         ) {
-            SettingScreen()
+            SettingScreen(navController)
         }
 
     // request permission
@@ -281,7 +279,7 @@ fun MainScreen() {
                         size = 30.dp,
                         color = MomoriColor.Mint
                     ) {
-
+                        navController.navigate(Key.SettingScreen.name)
                     }
                     Spacer(modifier = Modifier.height(10.dp))
                     MomoriIconButton(
@@ -291,7 +289,7 @@ fun MainScreen() {
                         size = 30.dp,
                         color = MomoriColor.Mint
                     ) {
-
+                        navController.navigate(Key.ProFileScreen.name)
                     }
                 }
             }
