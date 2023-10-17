@@ -305,7 +305,8 @@ fun MainScreen(navController: NavController,) {
                         size = 35.dp,
                         type = ButtonType.Mint
                     ) {
-                        Log.d(TAG, "MainScreen: click post")
+//                        Log.d(TAG, "MainScreen: click post")
+                        navController.navigate(Key.UpLoadScreen.name)
                     }
                     Spacer(modifier = Modifier.weight(1f))
 

@@ -25,12 +25,17 @@ import com.nohjason.momori.component.appbar.MomoriTopBar
 import com.nohjason.momori.component.button.MomoriImageButton
 import com.nohjason.momori.component.theme.Label
 import com.nohjason.momori.component.theme.MomoriColor
+import com.nohjason.momori.ui.root.key.Key
 
 @Composable
 fun ProFileScreen(
     navController: NavController,
 ) {
-    MomoriTopBar(titleText = "프로필") {
+    MomoriTopBar(
+        titleText = "프로필",
+        enablePrimaryButton = true,
+        primaryButtonCallback = { navController.navigate(Key.MainScreen.name) }
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
