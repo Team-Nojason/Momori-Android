@@ -153,6 +153,7 @@ fun MainScreen(navController: NavController,) {
     }
 
     LaunchedEffect(true) {
+        Log.d(TAG, "MainScreen: jh")
         requestPermissions(context, locationPermissions, launcherMultiplePermissions)
     }
 

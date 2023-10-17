@@ -1,11 +1,9 @@
 package com.nohjason.momori.ui.root.key
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.nohjason.momori.ui.main.MainScreen
 import com.nohjason.momori.ui.onboard.OnBoardScreen
 import com.nohjason.momori.ui.profile.ProFileScreen
@@ -13,8 +11,9 @@ import com.nohjason.momori.ui.setting.SettingScreen
 import com.nohjason.momori.ui.upload.UpLoadScreen
 
 @Composable
-fun KeyArray(){
-    val navController = rememberNavController()
+fun KeyArray(
+    navController: NavHostController
+){
     NavHost(
         navController = navController,
         startDestination = Key.MainScreen.name,

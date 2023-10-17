@@ -62,7 +62,7 @@ fun MomoriButton(
                 disabledContentColor = contentColorFor(type.disableColor),
                 disabledContainerColor = type.disableColor
             ),
-        elevation = if (type != ButtonType.Transparent) elevation else ButtonDefaults.buttonElevation(),
+        elevation = if (type != ButtonType.Transparent && type != ButtonType.TransparentLight) elevation else ButtonDefaults.buttonElevation(),
         border = border,
         contentPadding = contentPadding,
         interactionSource = interactionSource,
@@ -92,6 +92,9 @@ fun ButtonPreview() {
             Log.d(TAG, "ButtonPreview: Transparent")
         }
         MomoriButton(type = ButtonType.White, text = "버튼입니다") {
+            Log.d(TAG, "ButtonPreview: White")
+        }
+        MomoriButton(type = ButtonType.TransparentLight, text = "버튼입니다") {
             Log.d(TAG, "ButtonPreview: White")
         }
     }
