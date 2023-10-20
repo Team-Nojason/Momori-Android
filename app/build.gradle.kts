@@ -23,6 +23,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "CLIENT_ID", "${properties["CLIENT_ID"]}")
+        buildConfigField("String", "SERVER_URL", "${properties["SERVER_URL"]}")
 
         vectorDrawables {
             useSupportLibrary = true

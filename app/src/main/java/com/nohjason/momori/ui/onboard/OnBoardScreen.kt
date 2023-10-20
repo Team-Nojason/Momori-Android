@@ -62,6 +62,7 @@ fun OnBoardScreen(
             val account = completedTask.getResult(ApiException::class.java)
             val idToken = account?.idToken.toString()
             Log.d(TAG, "handleSignInResult: $idToken")
+            viewModel.login(idToken)
         } catch (e: ApiException) {
             Log.w("failed", "signInResult:failed code=" + e.statusCode)
         }
