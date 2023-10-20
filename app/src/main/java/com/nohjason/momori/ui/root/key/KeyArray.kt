@@ -16,7 +16,7 @@ fun KeyArray(
 ){
     NavHost(
         navController = navController,
-        startDestination = Key.MainScreen.name,
+        startDestination = Key.OnBoardScreen.name,
     ) {
         composable(route = Key.MainScreen.name) {
             MainScreen(navController = navController)

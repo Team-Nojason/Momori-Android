@@ -1,8 +1,11 @@
 package com.nohjason.momori.ui.onboard
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.net.Uri
+import android.app.Activity
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,44 +18,67 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.nohjason.momori.BuildConfig
 import com.nohjason.momori.R
+import com.nohjason.momori.component.theme.Headline
+import com.nohjason.momori.util.TAG
+//import com.nohjason.momori.BuildConfig
+
 
 @SuppressLint("StateFlowValueCalledInComposition")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OnBoardScreen(
     viewModel: OnBoardViewModel = viewModel(),
     navController: NavController
 ) {
-//    val imageModifier = Modifier
-//        .size(50.dp)
-//        .border(BorderStroke(1.dp, Color.Black))
-//        .background(Color.Yellow)
-
     val context = LocalContext.current
-//    val state by viewModel.state.collectAsState()
+
+    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestEmail()
+        .requestIdToken(BuildConfig.CLIENT_ID)
+        .build()
+    val mGoogleSignInClient = LocalContext.current.let { GoogleSignIn.getClient(it, gso) }
+
+    fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account = completedTask.getResult(ApiException::class.java)
+            val idToken = account?.idToken.toString()
+            Log.d(TAG, "handleSignInResult: $idToken")
+        } catch (e: ApiException) {
+            Log.w("failed", "signInResult:failed code=" + e.statusCode)
+        }
+    }
+
+    val startForResult =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            Log.d("TAG", " - OnBoardScreen() called")
+            if (result.resultCode == Activity.RESULT_OK) {
+                val intent = result.data
+                if (result.data != null) {
+                    val task: Task<GoogleSignInAccount> =
+                        GoogleSignIn.getSignedInAccountFromIntent(intent)
+                    handleSignInResult(task)
+                }
+            }
+        }
 
     Column (
         Modifier
@@ -61,33 +87,29 @@ fun OnBoardScreen(
 
         Text(text = "momori", modifier = Modifier.align(CenterHorizontally))
 
-//        TextField(value = state.id, onValueChange = { viewModel.updateId(it) })
         Spacer(modifier = Modifier.height(200.dp))
         Column {
-            Text(text = "당신의", fontSize = 28.sp, fontWeight = FontWeight.ExtraBold)
-            Text(text = "추억을", fontSize = 28.sp, fontWeight = FontWeight.ExtraBold)
-            Text(text = "공유해보세요 🔥", fontSize = 28.sp, fontWeight = FontWeight.ExtraBold)
+            Headline(text = "당신의")
+            Headline(text = "추억을")
+            Headline(text = "공유해보세요 \uD83D\uDD25")
         }
-        Spacer(modifier = Modifier.height(20.dp))
-        Button(onClick = {}, 
-            shape = RoundedCornerShape(10.dp), 
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xff363535)),
-            modifier = Modifier.width(200.dp)) {
-            Text(text = "🤨                       >")
-        }
-        Spacer(modifier = Modifier
-            .height(160.dp)
-        )
-        Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
+        Spacer(modifier = Modifier.weight(1f))
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 190.dp)
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.google),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(45.dp)
+                    .size(55.dp)
+                    .clip(CircleShape)
                     .clickable {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
-                        context.startActivity(intent)
+                        val signInIntent = mGoogleSignInClient.signInIntent
+                        startForResult.launch(signInIntent)
                     }
             )
             Spacer(modifier = Modifier.width(34.dp))
@@ -96,7 +118,7 @@ fun OnBoardScreen(
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(45.dp)
+                    .size(55.dp)
             )
             Spacer(modifier = Modifier.width(34.dp))
             Image(
@@ -104,7 +126,7 @@ fun OnBoardScreen(
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(45.dp)
+                    .size(55.dp)
             )
         }
     }

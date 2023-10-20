@@ -173,7 +173,7 @@ fun MainScreen(navController: NavController,) {
 
     LaunchedEffect(currentLocation) {
         if (currentLocation != null) {
-            val temp = LatLng.from(currentLocation!!.latitude + 0.003f, currentLocation!!.longitude - 0.01)
+            val temp = LatLng.from(currentLocation!!.latitude, currentLocation!!.longitude)
 //            currentLabel?.moveTo(currentLocation)
 //            circle?.setPosition(currentLocation)
 //            circleStroke?.setPosition(currentLocation)

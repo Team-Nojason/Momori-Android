@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface UserAPI {
     @GET("/users/{userId}")
-    fun getUser(userId: Int): UserResponse
+    fun login(): UserResponse
 }

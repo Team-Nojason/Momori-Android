@@ -1,3 +1,8 @@
+import java.util.Properties
+
+val properties = Properties()
+properties.load(project.rootProject.file("local.properties").inputStream())
+
 plugins {
     id ("com.android.application")
     id ("org.jetbrains.kotlin.android")
@@ -16,6 +21,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "CLIENT_ID", "${properties["CLIENT_ID"]}")
+
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -37,6 +45,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     composeOptions {
@@ -49,10 +58,8 @@ android {
     }
 }
 
-
 dependencies {
-    // nav
-    implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation ("com.google.android.gms:play-services-auth:20.7.0")
 
     // navigation
     val nav_version = "2.5.3"
