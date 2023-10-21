@@ -3,6 +3,7 @@ package com.nohjason.momori.ui.onboard
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,6 +22,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,6 +54,15 @@ fun OnBoardScreen(
     navController: NavController
 ) {
     val context = LocalContext.current
+    val sideEffect by viewModel.sideEffect.collectAsState()
+
+    LaunchedEffect(sideEffect) {
+        when (sideEffect) {
+            OnBoardSideEffect.Success -> Toast.makeText(context, "성공", Toast.LENGTH_SHORT).show()
+            OnBoardSideEffect.InvalidIdToken -> Toast.makeText(context, "잘못된 id Token", Toast.LENGTH_SHORT).show()
+            OnBoardSideEffect.None -> {}
+        }
+    }
 
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestEmail()
