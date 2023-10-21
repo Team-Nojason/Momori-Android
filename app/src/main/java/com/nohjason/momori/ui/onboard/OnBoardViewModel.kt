@@ -33,6 +33,12 @@ class OnBoardViewModel: ViewModel() {
                 sideEffect.update {
                     OnBoardSideEffect.LoginSuccess
                 }
+                state.update {
+                    it.copy(
+                        accessToken = result.accessToken,
+                        refreshToken = result.refreshToken
+                    )
+                }
                 Log.d(TAG, "login: ${result.accessToken}")
 
             } catch (e: HttpException) {

@@ -1,7 +1,9 @@
 package com.nohjason.momori.ui.onboard
 
 data class OnBoardState(
-    val idToken: String = ""
+    val idToken: String = "",
+    val accessToken: String = "",
+    val refreshToken: String = ""
 )
 
 sealed class OnBoardSideEffect {

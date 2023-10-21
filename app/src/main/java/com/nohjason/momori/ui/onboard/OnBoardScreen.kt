@@ -1,6 +1,7 @@
 package com.nohjason.momori.ui.onboard
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -25,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,10 +44,10 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.nohjason.momori.BuildConfig
 import com.nohjason.momori.R
+import com.nohjason.momori.application.PreferencesManager
 import com.nohjason.momori.component.theme.Headline
+import com.nohjason.momori.ui.root.key.Key
 import com.nohjason.momori.util.TAG
-//import com.nohjason.momori.BuildConfig
-
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
@@ -56,10 +58,23 @@ fun OnBoardScreen(
     val context = LocalContext.current
     val sideEffect by viewModel.sideEffect.collectAsState()
     val state by viewModel.state.collectAsState()
+    val preferencesManager = remember {
+        PreferencesManager(context)
+    }
 
     LaunchedEffect(sideEffect) {
         when (sideEffect) {
-            OnBoardSideEffect.LoginSuccess -> Toast.makeText(context, "성공", Toast.LENGTH_SHORT).show()
+            OnBoardSideEffect.LoginSuccess -> {
+                preferencesManager.saveData("ACCESS_TOKEN", state.accessToken)
+                preferencesManager.saveData("REFRESH_TOKEN", state.refreshToken)
+                Toast.makeText(context, "성공", Toast.LENGTH_SHORT).show()
+                navController.popBackStack()
+                navController.navigate(Key.MainScreen.name) {
+                    launchSingleTop = true
+                }
+                Log.d(TAG, "access - ${preferencesManager.getData("ACCESS_TOKEN", "NULL")} - OnBoardScreen() called")
+                Log.d(TAG, "refresh - ${preferencesManager.getData("REFRESH_TOKEN", "NULL")} - OnBoardScreen() called")
+            }
             OnBoardSideEffect.ToJoin -> {
 //                navController.navigate()
                 // to join screen with id_token data
