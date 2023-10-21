@@ -13,7 +13,7 @@ class PreferencesManager(context: Context) {
         editor.apply()
     }
 
-    fun getData(key: String, defaultValue: String): String {
+    fun getData(key: String, defaultValue: String = ""): String {
         return sharedPreferences.getString(key, defaultValue) ?: defaultValue
     }
 }
