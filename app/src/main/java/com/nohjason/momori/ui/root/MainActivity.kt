@@ -11,6 +11,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.kakao.sdk.common.util.Utility
+import com.nohjason.momori.ui.onboard.OnBoardScreen1
 import com.nohjason.momori.ui.root.key.KeyArray
 import com.nohjason.momori.ui.theme.MomoriTheme
 import com.nohjason.momori.util.TAG
@@ -29,8 +30,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ){
 
-                    KeyArray(navController)
-//                    OnBoardScreen()
+//                    KeyArray(navController)
+                    OnBoardScreen1()
 //                    MainScreen()
 //                    UpLoadScreen()
 //                    ProFileScreen()
