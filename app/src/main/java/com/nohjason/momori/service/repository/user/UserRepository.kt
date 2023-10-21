@@ -10,21 +10,3 @@ object UserRepository {
 
 
 }
-
-/**
- *
- *     @SerializedName("id_token")
- *     val idToken: String,
- *
- *     @SerializedName("email")
- *     val email: String,
- *
- *     @SerializedName("nickname")
- *     val nickname: String,
- *
- *     @SerializedName("profile_url")
- *     val profileUrl: String,
- *
- *     @SerializedName("platform_type")
- *     val platformType: String
- */
