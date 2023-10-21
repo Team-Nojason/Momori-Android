@@ -14,20 +14,24 @@ import retrofit2.HttpException
 
 class OnBoardViewModel: ViewModel() {
 
-    val sideEffect = MutableStateFlow<OnBoardSideEffect>(OnBoardSideEffect.None)
+    val sideEffect =
+        MutableStateFlow<OnBoardSideEffect>(OnBoardSideEffect.None)
+
+    val state =
+        MutableStateFlow(OnBoardState())
 
     fun login(idToken: String) {
         viewModelScope.launch {
             try {
                 val result = UserRepository.login(LoginRequest(
                     idToken = idToken,
-                    nickname = "hello",
-                    profileUrl = "asdasd",
+                    nickname = "nicknameee",
+                    profileUrl = "profileUrlll",
                     platformType = "AOS",
-                    fcmKey = "test"
+                    fcmKey = "fcmKeyyy"
                 ))
                 sideEffect.update {
-                    OnBoardSideEffect.Success
+                    OnBoardSideEffect.LoginSuccess
                 }
                 Log.d(TAG, "login: ${result.accessToken}")
 
@@ -35,21 +39,26 @@ class OnBoardViewModel: ViewModel() {
                 val errorResponse = e.toErrorResponse()
                 val code = e.code()
                 Log.d(TAG, "login: $errorResponse")
-                sideEffect.update {
-                    OnBoardSideEffect.InvalidIdToken
-                }
                 when (code) {
-                    400 -> {
-
-                    }
                     404 -> {
-
+                        state.update {
+                            it.copy(idToken = idToken)
+                        }
+                        sideEffect.update {
+                            OnBoardSideEffect.ToJoin
+                        }
                     }
                 }
             } catch (e: Exception) {
                 Log.d(TAG, "login: ${e.message}, ${e.javaClass}")
             }
 
+        }
+    }
+
+    fun clearSideEffect() {
+        sideEffect.update {
+            OnBoardSideEffect.None
         }
     }
 }
