@@ -87,7 +87,6 @@ fun UpLoadScreen(
                     modifier = Modifier
                         .padding(20.dp)
                         .fillMaxWidth()
-
                 )
                 TextField(
                     value = value1,

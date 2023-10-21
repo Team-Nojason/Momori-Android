@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
+import androidx.activity.result.component1
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -68,7 +69,8 @@ fun OnBoardScreen(
         .requestEmail()
         .requestIdToken(BuildConfig.CLIENT_ID)
         .build()
-    val mGoogleSignInClient = LocalContext.current.let { GoogleSignIn.getClient(it, gso) }
+
+    val mGoogleSignInClient = GoogleSignIn.getClient(context, gso)
 
     fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
