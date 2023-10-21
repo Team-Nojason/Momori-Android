@@ -20,7 +20,7 @@ class OnBoardViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 val result = UserRepository.login(LoginRequest(
-                    idToken = idToken + "",
+                    idToken = idToken,
                     nickname = "hello",
                     profileUrl = "asdasd",
                     platformType = "AOS",

@@ -77,20 +77,17 @@ fun OnBoardScreen(
             Log.d(TAG, "handleSignInResult: $idToken")
             viewModel.login(idToken)
         } catch (e: ApiException) {
-            Log.w("failed", "signInResult:failed code=" + e.statusCode)
+            Log.d(TAG, "signInResult:failed code=" + e.statusCode)
         }
     }
 
     val startForResult =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            Log.d("TAG", " - OnBoardScreen() called")
-            if (result.resultCode == Activity.RESULT_OK) {
-                val intent = result.data
-                if (result.data != null) {
-                    val task: Task<GoogleSignInAccount> =
-                        GoogleSignIn.getSignedInAccountFromIntent(intent)
-                    handleSignInResult(task)
-                }
+            val intent = result.data
+            if (result.data != null) {
+                val task: Task<GoogleSignInAccount> =
+                    GoogleSignIn.getSignedInAccountFromIntent(intent)
+                handleSignInResult(task)
             }
         }
 
