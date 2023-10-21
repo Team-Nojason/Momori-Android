@@ -1,7 +1,6 @@
 package com.nohjason.momori.ui.onboard
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -56,13 +55,18 @@ fun OnBoardScreen(
 ) {
     val context = LocalContext.current
     val sideEffect by viewModel.sideEffect.collectAsState()
+    val state by viewModel.state.collectAsState()
 
     LaunchedEffect(sideEffect) {
         when (sideEffect) {
-            OnBoardSideEffect.Success -> Toast.makeText(context, "성공", Toast.LENGTH_SHORT).show()
-            OnBoardSideEffect.InvalidIdToken -> Toast.makeText(context, "잘못된 id Token", Toast.LENGTH_SHORT).show()
+            OnBoardSideEffect.LoginSuccess -> Toast.makeText(context, "성공", Toast.LENGTH_SHORT).show()
+            OnBoardSideEffect.ToJoin -> {
+//                navController.navigate()
+                // to join screen with id_token data
+            }
             OnBoardSideEffect.None -> {}
         }
+        viewModel.clearSideEffect()
     }
 
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
