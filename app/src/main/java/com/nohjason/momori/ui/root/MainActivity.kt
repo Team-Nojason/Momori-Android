@@ -30,8 +30,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ){
 
-//                    KeyArray(navController)
-                    OnBoardScreen1()
+                    KeyArray(navController)
+//                    OnBoardScreen1()
 //                    MainScreen()
 //                    UpLoadScreen()
 //                    ProFileScreen()

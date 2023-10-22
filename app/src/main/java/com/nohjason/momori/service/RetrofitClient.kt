@@ -1,6 +1,7 @@
 package com.nohjason.momori.service
 
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonDeserializer
 import com.nohjason.momori.BuildConfig
 import com.nohjason.momori.service.api.user.PostAPI
 import com.nohjason.momori.service.api.user.UserAPI
@@ -8,11 +9,28 @@ import com.nohjason.momori.service.interceptor.LoginInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit
+
+
 
 object RetrofitClient {
     // json to data class
-    private val gson = GsonBuilder().setLenient().create()
+    private val gson = GsonBuilder()
+        .registerTypeAdapter(LocalDateTime::class.java, JsonDeserializer { json, typeOfT, context ->
+            LocalDateTime.parse(json.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
+        })
+        .registerTypeAdapter(LocalDate::class.java, JsonDeserializer { json, typeOfT, context ->
+            LocalDate.parse(json.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        })
+        .registerTypeAdapter(LocalTime::class.java, JsonDeserializer { json, typeOfT, context ->
+            LocalTime.parse(json.asString, DateTimeFormatter.ofPattern("HH:mm:ss.SSS'Z'"))
+        })
+        .setLenient()
+        .create()
 
     // loginInterceptor
     private val interceptor = LoginInterceptor()

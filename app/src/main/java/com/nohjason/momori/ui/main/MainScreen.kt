@@ -65,6 +65,8 @@ import com.nohjason.momori.ui.setting.SettingScreen
 import com.nohjason.momori.ui.theme.MomoriTheme
 import com.nohjason.momori.util.PermissionUtil.requestPermissions
 import com.nohjason.momori.util.TAG
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 
 private val locationPermissions = arrayOf(
     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -73,7 +75,10 @@ private val locationPermissions = arrayOf(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navController: NavController,) {
+fun MainScreen(
+    navController: NavController,
+    viewModel: MainViewModel = viewModel()
+) {
     val context = LocalContext.current
     var currentLocation by remember {
         mutableStateOf<LatLng?>(null)
@@ -153,6 +158,7 @@ fun MainScreen(navController: NavController,) {
     }
 
     LaunchedEffect(true) {
+        viewModel.addPost()
         Log.d(TAG, "MainScreen: jh")
         requestPermissions(context, locationPermissions, launcherMultiplePermissions)
     }

@@ -7,6 +7,7 @@ plugins {
     id ("com.android.application")
     id ("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id ("kotlinx-serialization")
 }
 
 android {
@@ -60,6 +61,12 @@ android {
 }
 
 dependencies {
+
+    // ktx
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.1")
+
+    // google
     implementation ("com.google.android.gms:play-services-auth:20.7.0")
 
     // navigation

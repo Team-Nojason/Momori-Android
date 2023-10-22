@@ -50,7 +50,6 @@ class LoginInterceptor : Interceptor {
             }
         }
 
-        val currentTime = LocalDateTime.now()
         val refreshToken = preferencesManager.getData("REFRESH_TOKEN")
 
         val payload = refreshToken.split(".")[1]
@@ -74,11 +73,13 @@ class LoginInterceptor : Interceptor {
         Log.d(TAG, "LoginInterceptor - $expirationLocalDateTime intercept() called")
 
         // refresh
+        val currentTime = LocalDateTime.now()
         val refreshRequestJson = Gson().toJson(RefreshRequest(refreshToken = refreshToken))
         if (currentTime.isAfter(expirationLocalDateTime)) {
+            Log.d(TAG, "LoginInterceptor refresh!!!! - intercept() called")
             val client = OkHttpClient()
             val refreshRequest = Request.Builder()
-                .url(BuildConfig.SERVER_URL + "/refresh")
+                .url(BuildConfig.SERVER_URL + "users/refresh")
                 .post(refreshRequestJson.toRequestBody("application/json".toMediaType()))
                 .build()
             val response = client.newCall(refreshRequest).execute()
