@@ -1,11 +1,17 @@
 package com.nohjason.momori.ui.onboard
 
 import android.graphics.Color
+import android.widget.Button
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,6 +31,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import com.nohjason.momori.R
+import com.nohjason.momori.component.button.ButtonType
+import com.nohjason.momori.component.button.MomoriButton
 import com.nohjason.momori.component.button.MomoriImageButton
 import com.nohjason.momori.component.theme.Headline
 import com.nohjason.momori.component.theme.MomoriColor
@@ -35,7 +43,7 @@ fun OnBoardScreen1(){
     var text by remember { mutableStateOf("") }
 
     Column (
-        modifier = Modifier.padding(horizontal = 20.dp)
+        modifier = Modifier.padding(20.dp)
     ){
         Spacer(modifier = Modifier.height(30.dp))
         Headline(text = "회원 정보 입력")
@@ -75,6 +83,22 @@ fun OnBoardScreen1(){
                 }
             }
 
+        }
+        Column (
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom,
+        ){
+            MomoriButton(
+                type = ButtonType.DarkGray,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+                ,
+                text = "다음으로",
+            ) {
+                ///////클릭/////////
+            }
         }
     }
 }
