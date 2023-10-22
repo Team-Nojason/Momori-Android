@@ -2,7 +2,7 @@ package com.nohjason.momori.service.interceptor
 
 import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.JsonParser
+import com.google.gson.reflect.TypeToken
 import com.nohjason.momori.BuildConfig
 import com.nohjason.momori.application.MomoriApp
 import com.nohjason.momori.application.PreferencesManager
@@ -15,12 +15,13 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import org.json.JSONObject
 import java.io.IOException
 import java.lang.Exception
 import java.nio.charset.StandardCharsets
 import java.time.Instant
 import java.time.LocalDateTime
-import java.time.ZoneOffset
+import java.time.ZoneId
 import java.util.Base64
 
 class LoginInterceptor : Interceptor {
@@ -57,25 +58,23 @@ class LoginInterceptor : Interceptor {
 
         // Parse the JSON payload
         val payloadJson = decodedPayload.trim()
-        val payloadMap = payloadJson.removePrefix("{").removeSuffix("}").split(",").associate {
-            val (key, value) = it.split(":")
-            key.trim() to value.trim()
-        }
+        val payloadMap = JSONObject(payloadJson)
 
         // Extract the expiration time
         val expirationTime = payloadMap["exp"]
-        val expirationEpochTime = expirationTime?.toLongOrNull() ?: 0
-        val expirationLocalDateTime = LocalDateTime.ofInstant(
-            Instant.ofEpochSecond(expirationEpochTime),
-            ZoneOffset.UTC
-        )
+        Log.d(TAG, "LoginInterceptor $expirationTime - intercept() called")
+        val expirationEpochTime = expirationTime.toString().toLong()
+        Log.d(TAG, "LoginInterceptor - intercept() called")
+        val instant = Instant.ofEpochSecond(expirationEpochTime)
+        val localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
 
-        Log.d(TAG, "LoginInterceptor - $expirationLocalDateTime intercept() called")
+
+        Log.d(TAG, "LoginInterceptor - $localDateTime intercept() called")
 
         // refresh
         val currentTime = LocalDateTime.now()
         val refreshRequestJson = Gson().toJson(RefreshRequest(refreshToken = refreshToken))
-        if (currentTime.isAfter(expirationLocalDateTime)) {
+        if (currentTime.isAfter(localDateTime)) {
             Log.d(TAG, "LoginInterceptor refresh!!!! - intercept() called")
             val client = OkHttpClient()
             val refreshRequest = Request.Builder()
