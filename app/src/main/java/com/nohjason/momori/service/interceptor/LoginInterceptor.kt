@@ -7,6 +7,7 @@ import com.nohjason.momori.application.MomoriApp
 import com.nohjason.momori.application.PreferencesManager
 import com.nohjason.momori.service.model.request.TokenRequest
 import com.nohjason.momori.service.model.response.TokenResponse
+import com.nohjason.momori.util.Jwt
 import com.nohjason.momori.util.TAG
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -14,14 +15,10 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
-import org.json.JSONObject
 import java.io.IOException
-import java.lang.Exception
-import java.nio.charset.StandardCharsets
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.util.Base64
 
 class LoginInterceptor : Interceptor {
 
@@ -50,31 +47,28 @@ class LoginInterceptor : Interceptor {
             }
         }
 
-        val refreshToken = preferencesManager.getData("REFRESH_TOKEN")
+        val refreshToken = preferencesManager.refreshToken
+        val accessToken = preferencesManager.accessToken
 
-        val payload = refreshToken.split(".")[1]
-        val decodedPayload = String(Base64.getUrlDecoder().decode(payload), StandardCharsets.UTF_8)
-
-        // Parse the JSON payload
-        val payloadJson = decodedPayload.trim()
-        val payloadMap = JSONObject(payloadJson)
+        val payloadMap = Jwt.getPayload(refreshToken)
 
         // Extract the expiration time
-        val expirationTime = payloadMap["exp"]
-        Log.d(TAG, "LoginInterceptor $expirationTime - intercept() called")
-        val expirationEpochTime = expirationTime.toString().toLong()
-        Log.d(TAG, "LoginInterceptor - intercept() called")
-        val instant = Instant.ofEpochSecond(expirationEpochTime)
-        val localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+        val expirationTime = payloadMap["exp"].toString().toLong()
+        val instant = Instant.ofEpochSecond(expirationTime)
+        val expirationLocalDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
 
 
-        Log.d(TAG, "LoginInterceptor - $localDateTime intercept() called")
+        Log.d(TAG, "LoginInterceptor - $expirationLocalDateTime intercept() called")
 
         // refresh
-        val currentTime = LocalDateTime.now()
-        val refreshRequestJson = Gson().toJson(TokenRequest(refreshToken = refreshToken))
-        if (currentTime.isAfter(localDateTime)) {
-            Log.d(TAG, "LoginInterceptor refresh!!!! - intercept() called")
+        val refreshRequestJson = Gson().toJson(
+            TokenRequest(
+                accessToken = accessToken,
+                refreshToken = refreshToken
+            )
+        )
+        if (LocalDateTime.now().isAfter(expirationLocalDateTime)) {
+            Log.d(TAG, "REFRESH $expirationLocalDateTime")
             val client = OkHttpClient()
             val refreshRequest = Request.Builder()
                 .url(BuildConfig.SERVER_URL + "users/refresh")
@@ -83,17 +77,15 @@ class LoginInterceptor : Interceptor {
             val response = client.newCall(refreshRequest).execute()
 
             if (response.isSuccessful) {
-                val tokenInfoJson = response.body!!.string()
+                val tokenInfoJson = response.body?.string()
                 val tokenInfo = Gson().fromJson(tokenInfoJson, TokenResponse::class.java)
-                preferencesManager.saveData("ACCESS_TOKEN", tokenInfo.accessToken)
-                preferencesManager.saveData("REFRESH_TOKEN", tokenInfo.refreshToken)
-            } else throw Exception("로그인 하셈")
+                preferencesManager.accessToken = tokenInfo.accessToken
+                preferencesManager.refreshToken = tokenInfo.refreshToken
+            }
         }
 
 
         // re request
-        val accessToken = preferencesManager.getData("ACCESS_TOKEN")
-
         return proceed(
             request.newBuilder()
                 .addHeader("Authorization", "Bearer $accessToken")

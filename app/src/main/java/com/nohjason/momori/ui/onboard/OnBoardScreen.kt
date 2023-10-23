@@ -1,12 +1,10 @@
 package com.nohjason.momori.ui.onboard
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
-import androidx.activity.result.component1
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -65,15 +63,15 @@ fun OnBoardScreen(
     LaunchedEffect(sideEffect) {
         when (sideEffect) {
             OnBoardSideEffect.LoginSuccess -> {
-                preferencesManager.saveData("ACCESS_TOKEN", state.accessToken)
-                preferencesManager.saveData("REFRESH_TOKEN", state.refreshToken)
+                preferencesManager.accessToken = state.accessToken
+                preferencesManager.refreshToken = state.refreshToken
                 Toast.makeText(context, "성공", Toast.LENGTH_SHORT).show()
                 navController.popBackStack()
                 navController.navigate(Key.MainScreen.name) {
                     launchSingleTop = true
                 }
-                Log.d(TAG, "access - ${preferencesManager.getData("ACCESS_TOKEN", "NULL")} - OnBoardScreen() called")
-                Log.d(TAG, "refresh - ${preferencesManager.getData("REFRESH_TOKEN", "NULL")} - OnBoardScreen() called")
+                Log.d(TAG, "access - ${preferencesManager.accessToken} - OnBoardScreen() called")
+                Log.d(TAG, "refresh - ${preferencesManager.refreshToken} - OnBoardScreen() called")
             }
             OnBoardSideEffect.ToJoin -> {
 //                navController.navigate()

@@ -1,4 +1,4 @@
-package com.nohjason.momori.service.repository.user
+package com.nohjason.momori.service.repository.auth
 
 import com.nohjason.momori.service.RetrofitClient
 import com.nohjason.momori.service.model.request.JoinRequest

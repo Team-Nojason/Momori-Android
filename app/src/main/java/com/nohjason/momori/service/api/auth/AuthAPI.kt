@@ -1,4 +1,4 @@
-package com.nohjason.momori.service.api.user
+package com.nohjason.momori.service.api.auth
 
 import com.nohjason.momori.service.model.request.JoinRequest
 import com.nohjason.momori.service.model.request.LoginRequest

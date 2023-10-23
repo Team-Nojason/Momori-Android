@@ -3,8 +3,8 @@ package com.nohjason.momori.service
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
 import com.nohjason.momori.BuildConfig
-import com.nohjason.momori.service.api.user.PostAPI
-import com.nohjason.momori.service.api.user.AuthAPI
+import com.nohjason.momori.service.api.auth.PostAPI
+import com.nohjason.momori.service.api.auth.AuthAPI
 import com.nohjason.momori.service.interceptor.LoginInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
