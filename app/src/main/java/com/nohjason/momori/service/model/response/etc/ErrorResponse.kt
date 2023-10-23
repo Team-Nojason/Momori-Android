@@ -1,4 +1,4 @@
-package com.nohjason.momori.service.model.response
+package com.nohjason.momori.service.model.response.etc
 
 import com.google.gson.annotations.SerializedName
 

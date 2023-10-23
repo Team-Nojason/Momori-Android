@@ -1,9 +1,6 @@
 package com.nohjason.momori.service.model.response
 
 import com.google.gson.annotations.SerializedName
-import com.nohjason.momori.service.util.serializer.LocalDateTimeSerializer
-import kotlinx.serialization.Contextual
-import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 
 data class PostResponse(

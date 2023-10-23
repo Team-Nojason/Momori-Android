@@ -3,8 +3,9 @@ package com.nohjason.momori.ui.onboard
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nohjason.momori.service.model.request.JoinRequest
 import com.nohjason.momori.service.model.request.LoginRequest
-import com.nohjason.momori.service.repository.user.UserRepository
+import com.nohjason.momori.service.repository.user.AuthRepository
 import com.nohjason.momori.util.TAG
 import com.nohjason.momori.util.toErrorResponse
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,13 +24,12 @@ class OnBoardViewModel: ViewModel() {
     fun login(idToken: String) {
         viewModelScope.launch {
             try {
-                val result = UserRepository.login(LoginRequest(
-                    idToken = idToken,
-                    nickname = "nicknameee",
-                    profileUrl = "profileUrlll",
-                    platformType = "AOS",
-                    fcmKey = "fcmKeyyy"
-                ))
+                val result = AuthRepository.login(
+                    LoginRequest(
+                        idToken = idToken,
+                        platformType = "G",
+                    )
+                )
                 sideEffect.update {
                     OnBoardSideEffect.LoginSuccess
                 }

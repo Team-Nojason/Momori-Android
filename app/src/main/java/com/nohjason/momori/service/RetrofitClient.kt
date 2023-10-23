@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
 import com.nohjason.momori.BuildConfig
 import com.nohjason.momori.service.api.user.PostAPI
-import com.nohjason.momori.service.api.user.UserAPI
+import com.nohjason.momori.service.api.user.AuthAPI
 import com.nohjason.momori.service.interceptor.LoginInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -52,7 +52,7 @@ object RetrofitClient {
 
 
     // api 들... (우리가 쓸 거)
-    val userAPI by lazy { retrofit.create(UserAPI::class.java) }
+    val authAPI by lazy { retrofit.create(AuthAPI::class.java) }
     val postAPI by lazy { retrofit.create(PostAPI::class.java) }
 
 }

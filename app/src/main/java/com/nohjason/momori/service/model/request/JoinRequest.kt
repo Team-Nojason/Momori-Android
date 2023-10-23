@@ -1,13 +1,10 @@
-package com.nohjason.momori.service.model.response
+package com.nohjason.momori.service.model.request
 
 import com.google.gson.annotations.SerializedName
 
-data class UserResponse(
-    @SerializedName("user_id")
-    val id: Int,
-
-    @SerializedName("email")
-    val email: String,
+data class JoinRequest(
+    @SerializedName("id_token")
+    val idToken: String,
 
     @SerializedName("profile_url")
     val profileUrl: String,
@@ -18,4 +15,6 @@ data class UserResponse(
     @SerializedName("platform_type")
     val platformType: String,
 
+    @SerializedName("fcm_key")
+    val fcmKey: String
 )

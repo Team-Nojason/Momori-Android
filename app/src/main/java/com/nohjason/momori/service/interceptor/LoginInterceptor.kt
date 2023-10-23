@@ -2,12 +2,11 @@ package com.nohjason.momori.service.interceptor
 
 import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.nohjason.momori.BuildConfig
 import com.nohjason.momori.application.MomoriApp
 import com.nohjason.momori.application.PreferencesManager
-import com.nohjason.momori.service.model.request.RefreshRequest
-import com.nohjason.momori.service.model.response.TokenInfoResponse
+import com.nohjason.momori.service.model.request.TokenRequest
+import com.nohjason.momori.service.model.response.TokenResponse
 import com.nohjason.momori.util.TAG
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -73,7 +72,7 @@ class LoginInterceptor : Interceptor {
 
         // refresh
         val currentTime = LocalDateTime.now()
-        val refreshRequestJson = Gson().toJson(RefreshRequest(refreshToken = refreshToken))
+        val refreshRequestJson = Gson().toJson(TokenRequest(refreshToken = refreshToken))
         if (currentTime.isAfter(localDateTime)) {
             Log.d(TAG, "LoginInterceptor refresh!!!! - intercept() called")
             val client = OkHttpClient()
@@ -85,7 +84,7 @@ class LoginInterceptor : Interceptor {
 
             if (response.isSuccessful) {
                 val tokenInfoJson = response.body!!.string()
-                val tokenInfo = Gson().fromJson(tokenInfoJson, TokenInfoResponse::class.java)
+                val tokenInfo = Gson().fromJson(tokenInfoJson, TokenResponse::class.java)
                 preferencesManager.saveData("ACCESS_TOKEN", tokenInfo.accessToken)
                 preferencesManager.saveData("REFRESH_TOKEN", tokenInfo.refreshToken)
             } else throw Exception("로그인 하셈")

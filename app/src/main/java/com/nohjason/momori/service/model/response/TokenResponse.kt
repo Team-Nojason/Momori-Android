@@ -2,7 +2,7 @@ package com.nohjason.momori.service.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class TokenInfoResponse(
+data class TokenResponse(
     @SerializedName("refresh_token")
     val refreshToken: String,
 
