@@ -1,12 +1,18 @@
 package com.nohjason.momori.service
 
+import android.util.Log
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
 import com.nohjason.momori.BuildConfig
 import com.nohjason.momori.service.api.auth.PostAPI
 import com.nohjason.momori.service.api.auth.AuthAPI
 import com.nohjason.momori.service.interceptor.LoginInterceptor
+import com.nohjason.momori.util.Json.isJsonArray
+import com.nohjason.momori.util.Json.isJsonObject
+import com.nohjason.momori.util.TAG
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
@@ -33,14 +39,35 @@ object RetrofitClient {
         .create()
 
     // loginInterceptor
-    private val interceptor = LoginInterceptor()
+    private val loginInterceptor = LoginInterceptor()
+    private val logInterceptor = HttpLoggingInterceptor { message ->
+        Log.i(TAG, "Retrofit-Client : $message")
+
+        when {
+            message.isJsonObject() ->
+                Log.i(TAG, JSONObject(message).toString(4))
+
+            message.isJsonArray() ->
+                Log.i(TAG, JSONObject(message).toString(4))
+
+            else -> {
+                try {
+                    Log.i(TAG, JSONObject(message).toString(4))
+                } catch (e: Exception) {
+                    Log.i(TAG, message)
+                }
+            }
+        }
+    }.setLevel(HttpLoggingInterceptor.Level.BODY)
+
 
     // httpClient
     private val okHttpClient= OkHttpClient.Builder()
         .connectTimeout(120, TimeUnit.SECONDS)
         .readTimeout(120, TimeUnit.SECONDS)
         .writeTimeout(120, TimeUnit.SECONDS)
-        .addInterceptor(interceptor)
+        .addInterceptor(loginInterceptor)
+        .addInterceptor(logInterceptor)
         .build()
 
     // retrofit 객체

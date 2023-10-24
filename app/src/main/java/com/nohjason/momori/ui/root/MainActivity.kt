@@ -37,7 +37,10 @@ class MainActivity : ComponentActivity() {
                     val sideEffect by viewModel.sideEffect.collectAsState()
                     when (sideEffect) {
                         MainState.InvalidUser -> MomoriApp.prefs.isLogin = false
-                        MainState.Success -> MomoriApp.prefs.isLogin = true
+                        MainState.Success -> {
+                            Log.d(TAG, "MainActivity - onCreate() called")
+                            MomoriApp.prefs.isLogin = true
+                        }
                         MainState.None -> {}
                     }
                     viewModel.checkLogin()

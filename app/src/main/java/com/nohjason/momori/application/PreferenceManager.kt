@@ -27,7 +27,7 @@ class PreferenceManager(context: Context) {
         private const val ACCESS_TOKEN = "ACCESS_TOKEN"
         private const val REFRESH_TOKEN = "REFRESH_TOKEN"
         private const val PLATFORM_TYPE = "PLATFORM_TYPE"
-        private const val IS_LOGIN = "REFRESH_TOKEN"
+        private const val IS_LOGIN = "IS_LOGIN"
 
     }
 
