@@ -158,8 +158,6 @@ fun MainScreen(
     }
 
     LaunchedEffect(true) {
-        viewModel.addPost()
-        Log.d(TAG, "MainScreen: jh")
         requestPermissions(context, locationPermissions, launcherMultiplePermissions)
     }
 

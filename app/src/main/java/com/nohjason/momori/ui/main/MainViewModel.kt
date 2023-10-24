@@ -11,18 +11,5 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
 class MainViewModel : ViewModel() {
-    fun addPost() {
-        viewModelScope.launch {
-            try {
-                PostRepository.addPost(PostRequest(
-                    content = "conte",
-                    latitude = 1f,
-                    longitude = 3f,
-                    isPublic = false,
-                ))
-            } catch (e: HttpException) {
-                Log.d(TAG, "MainViewModel ${e.message}, ${e.code()} - addPost() called")
-            }
-        }
-    }
+
 }

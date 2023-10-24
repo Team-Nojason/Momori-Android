@@ -44,26 +44,30 @@ class LoginInterceptor : Interceptor {
         val refreshToken = preferencesManager.refreshToken
         val accessToken = preferencesManager.accessToken
 
-        val payloadMap = Jwt.getPayload(refreshToken)
+        if (refreshToken != "") {
+            val payloadMap = Jwt.getPayload(refreshToken)
 
-        // Extract the expiration time
-        val expirationTime = payloadMap["exp"].toString().toLong()
-        val instant = Instant.ofEpochSecond(expirationTime)
-        val expirationLocalDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+            // Extract the expiration time
+            val expirationTime = payloadMap["exp"].toString().toLong()
+            val instant = Instant.ofEpochSecond(expirationTime)
+            val expirationLocalDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
 
-        Log.d(TAG, "LoginInterceptor - $expirationLocalDateTime intercept() called")
+            Log.d(TAG, "LoginInterceptor - $expirationLocalDateTime intercept() called")
 
-        // refresh
-        if (LocalDateTime.now().isAfter(expirationLocalDateTime)) {
-            val tokenInfo = RetrofitClient.authAPI.refresh(
-                TokenRequest(
-                    accessToken = accessToken,
-                    refreshToken = refreshToken
+            // refresh
+            if (LocalDateTime.now().isAfter(expirationLocalDateTime)) {
+                val tokenInfo = RetrofitClient.authAPI.refresh(
+                    TokenRequest(
+                        accessToken = accessToken,
+                        refreshToken = refreshToken
+                    )
                 )
-            )
-            preferencesManager.accessToken = tokenInfo.accessToken
-            preferencesManager.refreshToken = tokenInfo.refreshToken
+                preferencesManager.accessToken = tokenInfo.accessToken
+                preferencesManager.refreshToken = tokenInfo.refreshToken
+            }
         }
+
+
 
         // re request
         return proceed(

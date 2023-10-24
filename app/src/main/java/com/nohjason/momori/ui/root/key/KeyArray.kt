@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.nohjason.momori.application.MomoriApp
+import com.nohjason.momori.application.PreferenceManager
 import com.nohjason.momori.ui.main.MainScreen
 import com.nohjason.momori.ui.onboard.OnBoardScreen
 import com.nohjason.momori.ui.profile.ProFileScreen
@@ -16,7 +18,7 @@ fun KeyArray(
 ){
     NavHost(
         navController = navController,
-        startDestination = Key.OnBoardScreen.name,
+        startDestination = getStartDestination(),
     ) {
         composable(route = Key.MainScreen.name) {
             MainScreen(navController = navController)
@@ -35,3 +37,6 @@ fun KeyArray(
         }
     }
 }
+
+private fun getStartDestination() =
+    if (MomoriApp.prefs.isLogin) Key.MainScreen.name else Key.OnBoardScreen.name

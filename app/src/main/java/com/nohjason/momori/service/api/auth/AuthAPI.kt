@@ -19,7 +19,7 @@ interface AuthAPI {
     ): TokenResponse
 
     @POST("/auth/check")
-    suspend fun check(): TokenResponse
+    suspend fun check()
 
     @POST("/auth/refresh")
     fun refresh(

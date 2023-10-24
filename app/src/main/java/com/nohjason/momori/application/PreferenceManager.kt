@@ -20,11 +20,14 @@ class PreferenceManager(context: Context) {
     }
 
     companion object {
-        const val MOMORI_APP = "MOMORI_APP"
-        const val ACCESS_TOKEN = "ACCESS_TOKEN"
-        const val REFRESH_TOKEN = "REFRESH_TOKEN"
-        const val PLATFORM_TYPE = "PLATFORM_TYPE"
-        const val IS_LOGIN = "REFRESH_TOKEN"
+        // meta
+        private const val MOMORI_APP = "MOMORI_APP"
+
+        // auth
+        private const val ACCESS_TOKEN = "ACCESS_TOKEN"
+        private const val REFRESH_TOKEN = "REFRESH_TOKEN"
+        private const val PLATFORM_TYPE = "PLATFORM_TYPE"
+        private const val IS_LOGIN = "REFRESH_TOKEN"
 
     }
 

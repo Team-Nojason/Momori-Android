@@ -20,13 +20,13 @@ import java.util.concurrent.TimeUnit
 object RetrofitClient {
     // json to data class
     private val gson = GsonBuilder()
-        .registerTypeAdapter(LocalDateTime::class.java, JsonDeserializer { json, typeOfT, context ->
+        .registerTypeAdapter(LocalDateTime::class.java, JsonDeserializer { json, _, _ ->
             LocalDateTime.parse(json.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
         })
-        .registerTypeAdapter(LocalDate::class.java, JsonDeserializer { json, typeOfT, context ->
+        .registerTypeAdapter(LocalDate::class.java, JsonDeserializer { json, _, _ ->
             LocalDate.parse(json.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         })
-        .registerTypeAdapter(LocalTime::class.java, JsonDeserializer { json, typeOfT, context ->
+        .registerTypeAdapter(LocalTime::class.java, JsonDeserializer { json, _, _ ->
             LocalTime.parse(json.asString, DateTimeFormatter.ofPattern("HH:mm:ss.SSS'Z'"))
         })
         .setLenient()
