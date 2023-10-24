@@ -45,6 +45,7 @@ import com.nohjason.momori.R
 import com.nohjason.momori.application.PreferencesManager
 import com.nohjason.momori.component.theme.Headline
 import com.nohjason.momori.ui.root.key.Key
+import com.nohjason.momori.util.PlatformType
 import com.nohjason.momori.util.TAG
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -65,7 +66,7 @@ fun OnBoardScreen(
             OnBoardSideEffect.LoginSuccess -> {
                 preferencesManager.accessToken = state.accessToken
                 preferencesManager.refreshToken = state.refreshToken
-                Toast.makeText(context, "성공", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
                 navController.popBackStack()
                 navController.navigate(Key.MainScreen.name) {
                     launchSingleTop = true
@@ -74,8 +75,12 @@ fun OnBoardScreen(
                 Log.d(TAG, "refresh - ${preferencesManager.refreshToken} - OnBoardScreen() called")
             }
             OnBoardSideEffect.ToJoin -> {
+                Toast.makeText(context, "등록된 회원 정보가 없습니다", Toast.LENGTH_SHORT).show()
 //                navController.navigate()
                 // to join screen with id_token data
+            }
+            OnBoardSideEffect.InvalidIdToken -> {
+                Toast.makeText(context, "다시 시도해 주세요", Toast.LENGTH_SHORT).show()
             }
             OnBoardSideEffect.None -> {}
         }
@@ -93,8 +98,8 @@ fun OnBoardScreen(
         try {
             val account = completedTask.getResult(ApiException::class.java)
             val idToken = account?.idToken.toString()
-            Log.d(TAG, "handleSignInResult: $idToken")
-            viewModel.login(idToken)
+            preferencesManager.platformType = PlatformType.Google.typeName
+            viewModel.googleLogin(idToken)
         } catch (e: ApiException) {
             Log.d(TAG, "signInResult:failed code=" + e.statusCode)
         }

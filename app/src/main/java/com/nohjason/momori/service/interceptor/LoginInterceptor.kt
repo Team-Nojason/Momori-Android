@@ -1,14 +1,22 @@
 package com.nohjason.momori.service.interceptor
 
 import android.util.Log
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import com.google.gson.Gson
 import com.nohjason.momori.BuildConfig
 import com.nohjason.momori.application.MomoriApp
 import com.nohjason.momori.application.PreferencesManager
+import com.nohjason.momori.service.RetrofitClient
 import com.nohjason.momori.service.model.request.TokenRequest
 import com.nohjason.momori.service.model.response.TokenResponse
 import com.nohjason.momori.util.Jwt
 import com.nohjason.momori.util.TAG
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -23,12 +31,11 @@ import java.time.ZoneId
 class LoginInterceptor : Interceptor {
 
     companion object {
-
-        val ignorePath = listOf("/users/login", "/users/join")
-        val ignoreMethod = listOf("POST", "POST")
+        val ignorePath = listOf("/auth/login", "/auth/join", "/auth/refresh")
+        val ignoreMethod = listOf("POST", "POST", "POST")
     }
 
-
+    @OptIn(DelicateCoroutinesApi::class)
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response = with(chain) {
         val request = chain.request()
@@ -57,33 +64,19 @@ class LoginInterceptor : Interceptor {
         val instant = Instant.ofEpochSecond(expirationTime)
         val expirationLocalDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
 
-
         Log.d(TAG, "LoginInterceptor - $expirationLocalDateTime intercept() called")
 
         // refresh
-        val refreshRequestJson = Gson().toJson(
-            TokenRequest(
-                accessToken = accessToken,
-                refreshToken = refreshToken
-            )
-        )
         if (LocalDateTime.now().isAfter(expirationLocalDateTime)) {
-            Log.d(TAG, "REFRESH $expirationLocalDateTime")
-            val client = OkHttpClient()
-            val refreshRequest = Request.Builder()
-                .url(BuildConfig.SERVER_URL + "users/refresh")
-                .post(refreshRequestJson.toRequestBody("application/json".toMediaType()))
-                .build()
-            val response = client.newCall(refreshRequest).execute()
-
-            if (response.isSuccessful) {
-                val tokenInfoJson = response.body?.string()
-                val tokenInfo = Gson().fromJson(tokenInfoJson, TokenResponse::class.java)
-                preferencesManager.accessToken = tokenInfo.accessToken
-                preferencesManager.refreshToken = tokenInfo.refreshToken
-            }
+            val tokenInfo = RetrofitClient.authAPI.refresh(
+                TokenRequest(
+                    accessToken = accessToken,
+                    refreshToken = refreshToken
+                )
+            )
+            preferencesManager.accessToken = tokenInfo.accessToken
+            preferencesManager.refreshToken = tokenInfo.refreshToken
         }
-
 
         // re request
         return proceed(
@@ -91,5 +84,6 @@ class LoginInterceptor : Interceptor {
                 .addHeader("Authorization", "Bearer $accessToken")
                 .build()
         )
+
     }
 }

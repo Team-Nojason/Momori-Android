@@ -25,5 +25,4 @@ interface AuthAPI {
     fun refresh(
         @Body request: TokenRequest
     ): TokenResponse
-
 }

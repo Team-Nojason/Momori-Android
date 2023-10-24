@@ -9,5 +9,6 @@ data class OnBoardState(
 sealed class OnBoardSideEffect {
     object LoginSuccess: OnBoardSideEffect()
     object ToJoin: OnBoardSideEffect()
+    object InvalidIdToken: OnBoardSideEffect()
     object None: OnBoardSideEffect()
 }

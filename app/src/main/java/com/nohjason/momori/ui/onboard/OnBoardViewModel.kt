@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nohjason.momori.service.model.request.LoginRequest
 import com.nohjason.momori.service.repository.auth.AuthRepository
+import com.nohjason.momori.util.PlatformType
 import com.nohjason.momori.util.TAG
 import com.nohjason.momori.util.toErrorResponse
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,13 +21,14 @@ class OnBoardViewModel: ViewModel() {
     val state =
         MutableStateFlow(OnBoardState())
 
-    fun login(idToken: String) {
+    fun googleLogin(idToken: String) {
+        Log.d(TAG, "OnBoardViewModel$idToken - login() called")
         viewModelScope.launch {
             try {
                 val result = AuthRepository.login(
                     LoginRequest(
                         idToken = idToken,
-                        platformType = "G",
+                        platformType = PlatformType.Google.typeName,
                     )
                 )
                 sideEffect.update {
@@ -45,7 +47,11 @@ class OnBoardViewModel: ViewModel() {
                 val code = e.code()
                 Log.d(TAG, "login: $errorResponse")
                 when (code) {
-                    404 -> {
+                    400 -> sideEffect.update {
+                        OnBoardSideEffect.InvalidIdToken
+                    }
+                    401 -> {
+                        // 회원 가입 창으로 이동
                         state.update {
                             it.copy(idToken = idToken)
                         }
