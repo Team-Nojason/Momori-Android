@@ -50,7 +50,6 @@ object RetrofitClient {
         .client(okHttpClient)
         .build()
 
-
     // api 들... (우리가 쓸 거)
     val authAPI by lazy { retrofit.create(AuthAPI::class.java) }
     val postAPI by lazy { retrofit.create(PostAPI::class.java) }

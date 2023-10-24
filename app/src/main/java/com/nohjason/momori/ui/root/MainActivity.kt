@@ -1,6 +1,7 @@
 package com.nohjason.momori.ui.root
 
 //import com.nohjason.momori.ui.upload.UpLoadScreen
+import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -11,6 +12,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.kakao.sdk.common.util.Utility
+import com.nohjason.momori.application.MomoriApp
+import com.nohjason.momori.application.PreferenceManager
 import com.nohjason.momori.ui.onboard.OnBoardScreen1
 import com.nohjason.momori.ui.root.key.KeyArray
 import com.nohjason.momori.ui.theme.MomoriTheme
@@ -29,6 +32,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
+                    MomoriApp.prefs = PreferenceManager(applicationContext)
 
                     KeyArray(navController)
 //                    OnBoardScreen1()

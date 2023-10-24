@@ -6,6 +6,7 @@ import android.content.Context
 class MomoriApp : Application() {
 
     companion object {
+        lateinit var prefs: PreferenceManager
         private lateinit var instance: MomoriApp
 
         fun getContext(): Context {

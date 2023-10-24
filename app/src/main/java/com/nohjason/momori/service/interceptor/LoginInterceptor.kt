@@ -1,27 +1,14 @@
 package com.nohjason.momori.service.interceptor
 
 import android.util.Log
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
-import com.google.gson.Gson
-import com.nohjason.momori.BuildConfig
 import com.nohjason.momori.application.MomoriApp
-import com.nohjason.momori.application.PreferencesManager
+import com.nohjason.momori.application.PreferenceManager
 import com.nohjason.momori.service.RetrofitClient
 import com.nohjason.momori.service.model.request.TokenRequest
-import com.nohjason.momori.service.model.response.TokenResponse
 import com.nohjason.momori.util.Jwt
 import com.nohjason.momori.util.TAG
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import java.io.IOException
 import java.time.Instant
@@ -42,7 +29,7 @@ class LoginInterceptor : Interceptor {
         val path = request.url.encodedPath
         val method = request.method
 
-        val preferencesManager = PreferencesManager(MomoriApp.getContext())
+        val preferencesManager = PreferenceManager(MomoriApp.getContext())
 
         Log.d(TAG, "LoginInterceptor request $method $path - intercept() called")
 

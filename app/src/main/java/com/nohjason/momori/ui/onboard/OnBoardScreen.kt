@@ -42,7 +42,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.nohjason.momori.BuildConfig
 import com.nohjason.momori.R
-import com.nohjason.momori.application.PreferencesManager
+import com.nohjason.momori.application.PreferenceManager
 import com.nohjason.momori.component.theme.Headline
 import com.nohjason.momori.ui.root.key.Key
 import com.nohjason.momori.util.PlatformType
@@ -58,7 +58,7 @@ fun OnBoardScreen(
     val sideEffect by viewModel.sideEffect.collectAsState()
     val state by viewModel.state.collectAsState()
     val preferencesManager = remember {
-        PreferencesManager(context)
+        PreferenceManager(context)
     }
 
     LaunchedEffect(sideEffect) {
