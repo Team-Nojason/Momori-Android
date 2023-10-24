@@ -65,7 +65,7 @@ fun ImageButtonPreview() {
             Log.d(TAG, "IconButtonPreview: Google Image Button")
         }
         Spacer(modifier = Modifier.padding(horizontal = 10.dp))
-        MomoriImageButton(iconId = R.drawable.kaka) {
+        MomoriImageButton(iconId = R.drawable.kakao) {
             Log.d(TAG, "ImageButtonPreview: Kakao Image Button")
         }
         Spacer(modifier = Modifier.padding(horizontal = 10.dp))

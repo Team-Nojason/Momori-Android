@@ -149,7 +149,7 @@ fun OnBoardScreen(
             )
             Spacer(modifier = Modifier.width(34.dp))
             Image(
-                painter = painterResource(id = R.drawable.kaka),
+                painter = painterResource(id = R.drawable.kakao),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
