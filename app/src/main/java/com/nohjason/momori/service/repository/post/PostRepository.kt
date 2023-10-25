@@ -4,6 +4,16 @@ import com.nohjason.momori.service.RetrofitClient
 import com.nohjason.momori.service.model.request.PostRequest
 
 object PostRepository {
-    suspend fun addPost(request: PostRequest) =
-        RetrofitClient.postAPI.addPost(request)
+
+    suspend fun getPostById(postId: Int) =
+        RetrofitClient.postAPI.getPostById(postId)
+
+    suspend fun getPostByLocation(latitude: Float, longitude: Float) =
+        RetrofitClient.postAPI.getPostByLocation(latitude, longitude)
+
+    suspend fun getPostByUser(userId: Int?) =
+        RetrofitClient.postAPI.getPostByUser(userId)
+
+    suspend fun addPost(request: PostRequest, postId: Int) =
+        RetrofitClient.postAPI.addPost(request, postId)
 }

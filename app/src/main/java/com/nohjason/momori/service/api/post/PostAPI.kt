@@ -23,7 +23,7 @@ interface PostAPI {
 
     @GET("/post/user/{user_id}")
     suspend fun getPostByUser(
-        @Path("user_id") userId: Int
+        @Path("user_id") userId: Int?
     ): List<PostResponse>
 
     @POST("/post/{post_id}")
