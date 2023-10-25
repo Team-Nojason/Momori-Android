@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
 import com.nohjason.momori.BuildConfig
-import com.nohjason.momori.service.api.auth.PostAPI
+import com.nohjason.momori.service.api.post.PostAPI
 import com.nohjason.momori.service.api.auth.AuthAPI
 import com.nohjason.momori.service.interceptor.LoginInterceptor
 import com.nohjason.momori.util.Json.isJsonArray
