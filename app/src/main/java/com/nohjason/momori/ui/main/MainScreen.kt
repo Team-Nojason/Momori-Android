@@ -70,6 +70,7 @@ import com.nohjason.momori.ui.setting.SettingScreen
 import com.nohjason.momori.ui.theme.MomoriTheme
 import com.nohjason.momori.util.PermissionUtil.requestPermissions
 import com.nohjason.momori.util.TAG
+import kotlin.math.log
 
 
 private val locationPermissions = arrayOf(
@@ -251,7 +252,8 @@ fun MainScreen(
                     override fun onMapReady(kakaoMap: KakaoMap) {
                         // 인증 후 API 가 정상적으로 실행될 때 호출됨
                         Log.d(TAG, " - onMapReady() called")
-                        val dgsw = LatLng.from(35.6633349,128.4118222)
+//                        val dgsw = LatLng.from(35.6633349,128.4118222)
+                        val dgsw = LatLng.from(35.8773196, 128.6304854)
                         val update = CameraUpdateFactory.newCenterPosition(dgsw);
                         kakaoMap.moveCamera(update)
                         map = kakaoMap
@@ -278,11 +280,15 @@ fun MainScreen(
 
                         // 라벨을 클릭했을 때 호출
                         kakaoMap.setOnLabelClickListener { kakaoMap, layer, lable ->
-                            Log.d(TAG, "onMapReady: ${lable.texts}")
+
+                            if (lable == marker) {
+                                Log.d(TAG, "onMapReady: wow")
+                            }
                         }
 
 
                         marker = marker1
+                        Log.d(TAG, "onMapReadgyfy: ${marker}")
                         marker?.isClickable = true
                     }
                 })
