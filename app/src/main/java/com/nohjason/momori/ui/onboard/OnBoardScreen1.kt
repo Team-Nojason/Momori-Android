@@ -86,7 +86,9 @@ fun OnBoardScreen1(){
         }
         Column (
             modifier = Modifier
-                .fillMaxSize(),
+                .padding(20.dp)
+                .fillMaxSize()
+            ,
             verticalArrangement = Arrangement.Bottom,
         ){
             MomoriButton(
