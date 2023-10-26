@@ -34,6 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -47,6 +48,10 @@ import com.kakao.vectormap.MapView
 import com.kakao.vectormap.camera.CameraUpdateFactory
 import com.kakao.vectormap.label.Label
 import com.kakao.vectormap.label.LabelOptions
+import com.kakao.vectormap.label.LabelStyle
+import com.kakao.vectormap.label.LabelStyles
+import com.kakao.vectormap.label.LabelTransition
+import com.kakao.vectormap.label.Transition
 import com.kakao.vectormap.shape.DotPoints
 import com.kakao.vectormap.shape.Polygon
 import com.kakao.vectormap.shape.PolygonOptions
@@ -65,7 +70,6 @@ import com.nohjason.momori.ui.setting.SettingScreen
 import com.nohjason.momori.ui.theme.MomoriTheme
 import com.nohjason.momori.util.PermissionUtil.requestPermissions
 import com.nohjason.momori.util.TAG
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 private val locationPermissions = arrayOf(
@@ -170,6 +174,9 @@ fun MainScreen(
     var circleStroke by remember {
         mutableStateOf<Polyline?>(null)
     }
+    var marker by remember {
+        mutableStateOf<Label?>(null)
+    }
 
     var map by remember {
         mutableStateOf<KakaoMap?>(null)
@@ -252,7 +259,7 @@ fun MainScreen(
                         val label = kakaoMap.labelManager?.layer?.addLabel(
                                 LabelOptions.from(dgsw)
                                     .setStyles(R.drawable.ic_current)
-                            )
+                        )
 
                         currentLabel = label
 
@@ -261,6 +268,22 @@ fun MainScreen(
 
                         circle = innerCircle
                         circleStroke = outerCircle
+
+
+                        // 라벨 생성
+                        val marker1 = kakaoMap.labelManager?.layer?.addLabel(
+                            LabelOptions.from(dgsw)
+                                .setStyles(R.drawable.google_old)
+                        )
+
+                        // 라벨을 클릭했을 때 호출
+                        kakaoMap.setOnLabelClickListener { kakaoMap, layer, lable ->
+                            Log.d(TAG, "onMapReady: ${lable.texts}")
+                        }
+
+
+                        marker = marker1
+                        marker?.isClickable = true
                     }
                 })
                 mapView

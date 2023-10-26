@@ -39,4 +39,5 @@ fun KeyArray(
 }
 
 private fun getStartDestination() =
-    if (MomoriApp.prefs.isLogin) Key.MainScreen.name else Key.OnBoardScreen.name
+    Key.MainScreen.name
+//    if (MomoriApp.prefs.isLogin) Key.MainScreen.name else Key.OnBoardScreen.name
