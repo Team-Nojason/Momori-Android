@@ -11,12 +11,12 @@ import retrofit2.http.Path
 interface CommentApi {
 
     @GET("/comment/post/{post_id}")
-    suspend fun addComment(
+    suspend fun getComment(
         @Path("post_id") postId: Int
     ): List<CommentResponse>
 
     @POST("/comment/post/{post_id}")
-    suspend fun editComment(
+    suspend fun addComment(
         @Path("post_id") postId: Int,
         @Body request: AddCommentRequest
     ): CommentResponse
