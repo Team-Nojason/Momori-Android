@@ -15,7 +15,7 @@ data class PostResponse(
     val createdAt: LocalDateTime,
 
     @SerializedName("updated_at")
-    val updatedAt: LocalDateTime?,
+    val updatedAt: LocalDateTime,
 
     @SerializedName("latitude")
     val latitude: Float,
