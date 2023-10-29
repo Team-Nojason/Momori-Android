@@ -1,10 +1,14 @@
 package com.nohjason.momori.service.api.post
 
-import com.nohjason.momori.service.model.request.PostRequest
+import com.nohjason.momori.service.model.request.AddPostRequest
+import com.nohjason.momori.service.model.request.EditPostRequest
 import com.nohjason.momori.service.model.response.PostResponse
+import com.nohjason.momori.service.model.response.etc.MessageResponse
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -28,7 +32,18 @@ interface PostAPI {
 
     @POST("/post/{post_id}")
     suspend fun addPost(
-        @Body request: PostRequest,
+        @Body request: AddPostRequest,
         @Path("post_id") postId: Int
     ): PostResponse
+
+    @PUT("/post/{post_id}")
+    suspend fun editPost(
+        @Body request: EditPostRequest,
+        @Path("post_id") postId: Int
+    ): PostResponse
+
+    @DELETE("/post/{post_id}")
+    suspend fun removePost(
+        @Path("post_id") postId: Int
+    ): MessageResponse
 }

@@ -288,7 +288,7 @@ fun MainScreen(
 
 
                         marker = marker1
-                        Log.d(TAG, "onMapReadgyfy: ${marker}")
+                        Log.d(TAG, "onMapReadgyfy: $marker")
                         marker?.isClickable = true
                     }
                 })

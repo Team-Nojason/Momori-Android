@@ -1,7 +1,7 @@
 package com.nohjason.momori.service.repository.post
 
 import com.nohjason.momori.service.RetrofitClient
-import com.nohjason.momori.service.model.request.PostRequest
+import com.nohjason.momori.service.model.request.AddPostRequest
 
 object PostRepository {
 
@@ -14,6 +14,6 @@ object PostRepository {
     suspend fun getPostByUser(userId: Int?) =
         RetrofitClient.postAPI.getPostByUser(userId)
 
-    suspend fun addPost(request: PostRequest, postId: Int) =
+    suspend fun addPost(request: AddPostRequest, postId: Int) =
         RetrofitClient.postAPI.addPost(request, postId)
 }
