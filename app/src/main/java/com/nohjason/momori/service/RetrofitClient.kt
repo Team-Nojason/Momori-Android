@@ -4,8 +4,8 @@ import android.util.Log
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
 import com.nohjason.momori.BuildConfig
-import com.nohjason.momori.service.api.post.PostAPI
-import com.nohjason.momori.service.api.auth.AuthAPI
+import com.nohjason.momori.service.api.post.PostApi
+import com.nohjason.momori.service.api.auth.AuthApi
 import com.nohjason.momori.service.interceptor.LoginInterceptor
 import com.nohjason.momori.util.Json.isJsonArray
 import com.nohjason.momori.util.Json.isJsonObject
@@ -78,7 +78,7 @@ object RetrofitClient {
         .build()
 
     // api 들... (우리가 쓸 거)
-    val authAPI by lazy { retrofit.create(AuthAPI::class.java) }
-    val postAPI by lazy { retrofit.create(PostAPI::class.java) }
+    val authAPI by lazy { retrofit.create(AuthApi::class.java) }
+    val postAPI by lazy { retrofit.create(PostApi::class.java) }
 
 }
