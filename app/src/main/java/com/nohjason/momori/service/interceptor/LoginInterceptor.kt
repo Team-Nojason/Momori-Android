@@ -56,7 +56,7 @@ class LoginInterceptor : Interceptor {
 
             // refresh
             if (LocalDateTime.now().isAfter(expirationLocalDateTime)) {
-                val tokenInfo = RetrofitClient.authAPI.refresh(
+                val tokenInfo = RetrofitClient.authApi.refresh(
                     TokenRequest(
                         accessToken = accessToken,
                         refreshToken = refreshToken

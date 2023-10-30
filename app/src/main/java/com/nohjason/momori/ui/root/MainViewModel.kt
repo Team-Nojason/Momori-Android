@@ -15,7 +15,7 @@ class MainViewModel: ViewModel() {
     fun checkLogin() {
         viewModelScope.launch {
             try {
-                RetrofitClient.authAPI.check()
+                RetrofitClient.authApi.check()
                 sideEffect.update {
                     MainState.Success
                 }

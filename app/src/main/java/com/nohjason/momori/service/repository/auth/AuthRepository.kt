@@ -7,15 +7,15 @@ import com.nohjason.momori.service.model.request.TokenRequest
 
 object AuthRepository {
     suspend fun login(loginRequest: LoginRequest) =
-        RetrofitClient.authAPI.login(loginRequest)
+        RetrofitClient.authApi.login(loginRequest)
 
     suspend fun join(joinRequest: JoinRequest) =
-        RetrofitClient.authAPI.join(joinRequest)
+        RetrofitClient.authApi.join(joinRequest)
 
     suspend fun refresh(tokenRequest: TokenRequest) =
-        RetrofitClient.authAPI.refresh(tokenRequest)
+        RetrofitClient.authApi.refresh(tokenRequest)
 
     suspend fun check() =
-        RetrofitClient.authAPI.check()
+        RetrofitClient.authApi.check()
 
 }
