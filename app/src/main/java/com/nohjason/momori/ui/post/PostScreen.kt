@@ -15,6 +15,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -22,6 +26,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import com.nohjason.momori.R
@@ -29,6 +34,7 @@ import com.nohjason.momori.component.appbar.MomoriTopBar
 import com.nohjason.momori.component.button.ButtonType
 import com.nohjason.momori.component.button.MomoriIconButton
 import com.nohjason.momori.component.button.MomoriImageButton
+import com.nohjason.momori.component.text.MomoriTextField
 import com.nohjason.momori.component.theme.MomoriColor
 
 @Composable
@@ -123,5 +129,11 @@ fun PostScreen(){
                 
             }
         }
+        var text by remember { mutableStateOf("") }
+
+        MomoriTextField(
+            value = text,
+            onValueChange = {text = it},
+        )
     }
 }
