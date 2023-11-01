@@ -8,6 +8,7 @@ import com.nohjason.momori.application.MomoriApp
 import com.nohjason.momori.application.PreferenceManager
 import com.nohjason.momori.ui.main.MainScreen
 import com.nohjason.momori.ui.onboard.OnBoardScreen
+import com.nohjason.momori.ui.post.PostScreen
 import com.nohjason.momori.ui.profile.ProFileScreen
 import com.nohjason.momori.ui.setting.SettingScreen
 import com.nohjason.momori.ui.upload.UpLoadScreen
@@ -35,9 +36,12 @@ fun KeyArray(
         composable(route = Key.UpLoadScreen.name){
             UpLoadScreen(navController = navController)
         }
+        composable(route = Key.PostScreen.name){
+            PostScreen()
+        }
     }
 }
 
 private fun getStartDestination() =
-    Key.MainScreen.name
+    Key.PostScreen.name
 //    if (MomoriApp.prefs.isLogin) Key.MainScreen.name else Key.OnBoardScreen.name

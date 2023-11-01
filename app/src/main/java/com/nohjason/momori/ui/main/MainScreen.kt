@@ -280,9 +280,11 @@ fun MainScreen(
 
                         // 라벨을 클릭했을 때 호출
                         kakaoMap.setOnLabelClickListener { kakaoMap, layer, lable ->
+                            when (lable) {
+                                marker -> {
+                                    Log.d(TAG, "onMapReady: ${marker}")
 
-                            if (lable == marker) {
-                                Log.d(TAG, "onMapReady: wow")
+                                }
                             }
                         }
 

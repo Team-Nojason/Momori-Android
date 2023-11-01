@@ -18,8 +18,10 @@ import com.kakao.sdk.common.util.Utility
 import com.nohjason.momori.application.MomoriApp
 import com.nohjason.momori.application.PreferenceManager
 import com.nohjason.momori.ui.onboard.OnBoardScreen2
+import com.nohjason.momori.ui.post.PostScreen
 import com.nohjason.momori.ui.root.key.KeyArray
 import com.nohjason.momori.ui.theme.MomoriTheme
+import com.nohjason.momori.ui.upload.UpLoadScreen
 import com.nohjason.momori.util.TAG
 
 class MainActivity : ComponentActivity() {
@@ -48,10 +50,6 @@ class MainActivity : ComponentActivity() {
                     MomoriApp.prefs = PreferenceManager(applicationContext)
 
                     KeyArray(navController)
-//                    OnBoardScreen2()
-//                    MainScreen()
-//                    UpLoadScreen()
-//                    ProFileScreen()
                 }
             }
         }

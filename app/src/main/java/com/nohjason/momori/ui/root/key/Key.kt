@@ -5,5 +5,6 @@ enum class Key{
     OnBoardScreen,
     ProFileScreen,
     SettingScreen,
-    UpLoadScreen
+    UpLoadScreen,
+    PostScreen
 }
