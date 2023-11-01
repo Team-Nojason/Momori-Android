@@ -19,7 +19,7 @@ interface PostApi {
         @Path("post_id") postId: Int
     ): PostResponse
 
-    @GET("/post")
+    @GET("/post/location")
     suspend fun getPostByLocation(
         @Query("latitude") latitude: Float,
         @Query("longitude") longitude: Float
@@ -30,10 +30,9 @@ interface PostApi {
         @Path("user_id") userId: Int?
     ): List<PostResponse>
 
-    @POST("/post/{post_id}")
+    @POST("/post/")
     suspend fun addPost(
         @Body request: AddPostRequest,
-        @Path("post_id") postId: Int
     ): PostResponse
 
     @PUT("/post/{post_id}")
