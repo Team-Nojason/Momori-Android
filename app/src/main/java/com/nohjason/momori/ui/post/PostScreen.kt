@@ -2,18 +2,35 @@ package com.nohjason.momori.ui.post
 
 import android.widget.Button
 import androidx.compose.foundation.Image
+<<<<<<< HEAD
+=======
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.scrollable
+>>>>>>> main
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+<<<<<<< HEAD
+=======
+import androidx.compose.foundation.layout.fillMaxHeight
+>>>>>>> main
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+<<<<<<< HEAD
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
+=======
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+>>>>>>> main
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -91,6 +108,7 @@ fun PostScreen(){
                     }) {
 
                 }
+<<<<<<< HEAD
             }
             Image(
                 painter = painterResource(R.drawable.ic_launcher_background),
@@ -162,5 +180,86 @@ fun PostScreen(){
                 }
             }
         }
+=======
+            }
+            Image(
+                painter = painterResource(R.drawable.ic_launcher_background),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth(),
+                contentScale = ContentScale.FillWidth
+            )
+            Row (
+                modifier = Modifier
+                    .drawBehind {
+                        val borderSize = 1.dp.toPx()
+                        drawLine(
+                            color = MomoriColor.Black,
+                            start = Offset(0f, size.height),
+                            end = Offset(size.width, size.height),
+                            strokeWidth = borderSize
+                        )
+                    }
+            ){
+                MomoriImageButton(
+                    iconId = R.drawable.ic_likes,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(10.dp)
+                ) {
+
+                }
+                MomoriImageButton(
+                    iconId = R.drawable.ic_chat,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                ) {
+
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                MomoriImageButton(
+                    iconId = R.drawable.ic_post,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(end = 10.dp)
+                ) {
+
+                }
+            }
+            repeat(100) {
+                Text("Item $it", modifier = Modifier.padding(2.dp))
+            }
+        }
+        var text by remember { mutableStateOf("") }
+        Column {
+            Spacer(modifier = Modifier.weight(1f))
+            Row(
+                Modifier.padding(10.dp)
+            ){
+                Image(
+                    painter = painterResource(id = R.drawable.rectangle),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(50.dp)
+                        .align(Alignment.CenterVertically)
+                        .padding(end = 10.dp)
+                )
+                MomoriTextField(
+                    value = text,
+                    onValueChange = {text = it},
+                    modifier = Modifier
+                )
+                MomoriIconButton(
+                    iconId = R.drawable.ic_post,
+                    type = ButtonType.Mint,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                ) {
+
+                }
+
+            }
+        }
+>>>>>>> main
     }
 }

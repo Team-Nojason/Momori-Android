@@ -74,10 +74,16 @@ fun MomoriTextField(
             unfocusedIndicatorColor = Color.Transparent,
         ),
         shape = RoundedCornerShape(8.dp),
+<<<<<<< HEAD
         modifier = modifier
             .height(60.dp)
         ,
         singleLine = singleLine,
+=======
+        modifier = Modifier
+            .fillMaxWidth()
+        ,
+>>>>>>> main
         placeholder = { Text(text = "댓글을 작성해 주세요") }
     )
 }
