@@ -2,6 +2,7 @@ package com.nohjason.momori.component.text
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -33,6 +34,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.nohjason.momori.component.theme.MomoriColor
 import org.w3c.dom.Text
+import kotlin.math.sin
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,14 +69,15 @@ fun MomoriTextField(
         onValueChange = onValueChange,
         textStyle = TextStyle(color = MomoriColor.Black),
         colors = TextFieldDefaults.textFieldColors(
-            containerColor = MomoriColor.Gray100,
+            containerColor = MomoriColor.Gray50,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
         ),
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
+            .height(60.dp)
         ,
+        singleLine = singleLine,
         placeholder = { Text(text = "댓글을 작성해 주세요") }
     )
 }

@@ -44,10 +44,12 @@ fun MomoriIconButton(
     type: ButtonType,
     onClick: () -> Unit
 ) {
-    Box {
+    Box(
+        modifier = modifier
+    ) {
         MomoriButton(
             onClick = onClick,
-            modifier = modifier
+            modifier = Modifier
                 .size(size * 2),
             type = type,
             enabled = enable,

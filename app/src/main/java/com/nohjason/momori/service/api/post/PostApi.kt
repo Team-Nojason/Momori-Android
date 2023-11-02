@@ -33,6 +33,7 @@ interface PostApi {
     @POST("/post/")
     suspend fun addPost(
         @Body request: AddPostRequest,
+        postId: Int,
     ): PostResponse
 
     @PUT("/post/{post_id}")

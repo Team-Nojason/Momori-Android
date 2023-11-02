@@ -19,9 +19,9 @@ sealed class DividerType(val thickness: Dp) {
 }
 
 @Composable
-fun MomoriDivier(
+fun MomoriDivider(
     modifier: Modifier = Modifier,
-    color: Color = MomoriColor.Gray50,
+    color: Color = MomoriColor.Gray100,
     type: DividerType
 ) {
     Divider(
@@ -41,11 +41,11 @@ fun DividerPreview() {
     ) {
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
 
-        MomoriDivier(type = DividerType.Small)
+        MomoriDivider(type = DividerType.Small)
 
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
 
-        MomoriDivier(type = DividerType.Large)
+        MomoriDivider(type = DividerType.Large)
 
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
     }
