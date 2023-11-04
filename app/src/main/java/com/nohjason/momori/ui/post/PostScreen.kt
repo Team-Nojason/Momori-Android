@@ -153,8 +153,7 @@ fun PostScreen(){
                     type = ButtonType.Mint,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
-                        .padding(start = 8.dp)
-                    ,
+                        .padding(start = 8.dp),
                     shape = MomoriTheme.shape.large,
                     size = 30.dp
                 ) {
