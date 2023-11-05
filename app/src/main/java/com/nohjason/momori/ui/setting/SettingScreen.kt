@@ -7,7 +7,9 @@ import com.nohjason.momori.component.button.ListButtonType
 import com.nohjason.momori.component.button.MomoriListButton
 import com.nohjason.momori.component.list.DividerType
 import com.nohjason.momori.component.list.MomoriDivider
-import com.nohjason.momori.ui.root.key.Key
+import com.nohjason.momori.ui.root.key.NavGroup
+
+//import com.nohjason.momori.ui.root.key.Key
 
 @Composable
 fun SettingScreen(
@@ -16,7 +18,7 @@ fun SettingScreen(
     MomoriTopBar(
         titleText = "설정",
         enablePrimaryButton = true,
-        primaryButtonCallback = {navController.navigate(Key.MainScreen.name)}
+        primaryButtonCallback = {navController.navigate(NavGroup.Main.MainMap.id)}
     ) {
         MomoriListButton(onClick = { /*TODO*/ }, text = "내 계정")
         MomoriListButton(onClick = { /*TODO*/ }, text = "개인정보 수집 및 이용 약관")

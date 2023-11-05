@@ -44,7 +44,7 @@ import com.nohjason.momori.BuildConfig
 import com.nohjason.momori.R
 import com.nohjason.momori.application.PreferenceManager
 import com.nohjason.momori.component.theme.Headline
-import com.nohjason.momori.ui.root.key.Key
+import com.nohjason.momori.ui.root.key.NavGroup
 import com.nohjason.momori.util.PlatformType
 import com.nohjason.momori.util.TAG
 
@@ -68,9 +68,10 @@ fun OnBoardScreen(
                 preferencesManager.refreshToken = state.refreshToken
                 Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
                 navController.popBackStack()
-                navController.navigate(Key.MainScreen.name) {
-                    launchSingleTop = true
-                }
+//                navController.navigate(Key.MainScreen.name) {
+//                    launchSingleTop = true
+//                }
+                navController.navigate(NavGroup.Main.MainMap.id)
                 Log.d(TAG, "access - ${preferencesManager.accessToken} - OnBoardScreen() called")
                 Log.d(TAG, "refresh - ${preferencesManager.refreshToken} - OnBoardScreen() called")
             }

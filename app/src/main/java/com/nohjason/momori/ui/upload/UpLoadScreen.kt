@@ -30,7 +30,9 @@ import com.nohjason.momori.R
 import com.nohjason.momori.component.appbar.MomoriTopBar
 import com.nohjason.momori.component.appbar.TopBarPrevie1
 import com.nohjason.momori.component.button.MomoriImageButton
-import com.nohjason.momori.ui.root.key.Key
+import com.nohjason.momori.ui.root.key.NavGroup
+
+//import com.nohjason.momori.ui.root.key.Key
 
 @Composable
 fun UpLoadScreen(
@@ -50,7 +52,7 @@ fun UpLoadScreen(
             Spacer(modifier = Modifier.width(10.dp))
             MomoriImageButton(iconId = R.drawable.ic_cancel) {
 //                Log.d("wow", "click")
-                navController.navigate(Key.MainScreen.name)
+                navController.navigate(NavGroup.Main.MainMap.id)
             }
         }) {
             Column{

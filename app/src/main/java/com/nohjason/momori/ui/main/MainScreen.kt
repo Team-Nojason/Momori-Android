@@ -36,6 +36,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavDeepLinkRequest
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -65,7 +66,7 @@ import com.nohjason.momori.component.button.MomoriButton
 import com.nohjason.momori.component.button.MomoriIconButton
 import com.nohjason.momori.component.dialog.MomoriDialog
 import com.nohjason.momori.component.theme.MomoriColor
-import com.nohjason.momori.ui.root.key.Key
+import com.nohjason.momori.ui.root.key.NavGroup
 import com.nohjason.momori.ui.setting.SettingScreen
 import com.nohjason.momori.ui.theme.MomoriTheme
 import com.nohjason.momori.util.PermissionUtil.requestPermissions
@@ -315,7 +316,7 @@ fun MainScreen(
                         size = 30.dp,
                         color = MomoriColor.Mint
                     ) {
-                        navController.navigate(Key.SettingScreen.name)
+                        navController.navigate(NavGroup.Setting.Setting_View.id)
                     }
                     Spacer(modifier = Modifier.height(10.dp))
                     MomoriIconButton(
@@ -325,7 +326,7 @@ fun MainScreen(
                         size = 30.dp,
                         color = MomoriColor.Mint
                     ) {
-                        navController.navigate(Key.ProFileScreen.name)
+                        navController.navigate(NavGroup.Setting.Setting_Profile_View.id)
                     }
                 }
             }
@@ -342,7 +343,8 @@ fun MainScreen(
                         type = ButtonType.Mint
                     ) {
 //                        Log.d(TAG, "MainScreen: click post")
-                        navController.navigate(Key.UpLoadScreen.name)
+//                        navController.navigate(NavGroup.Peed.Upload_Peed)
+                        navController.navigate(NavGroup.Peed.Upload_Peed.id)
                     }
                     Spacer(modifier = Modifier.weight(1f))
 

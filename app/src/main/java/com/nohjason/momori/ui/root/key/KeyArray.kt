@@ -1,6 +1,7 @@
 package com.nohjason.momori.ui.root.key
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.input.key.Key
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,27 +22,28 @@ fun KeyArray(
         navController = navController,
         startDestination = getStartDestination(),
     ) {
-        composable(route = Key.MainScreen.name) {
+        composable(route = NavGroup.Main.MainMap.id) {
             MainScreen(navController = navController)
         }
-        composable(route = Key.OnBoardScreen.name){
+        composable(route = NavGroup.Main.On_Board_1.id){
             OnBoardScreen(navController = navController)
         }
-        composable(route = Key.ProFileScreen.name){
+        composable(route = NavGroup.Setting.Setting_Profile_View.id){
             ProFileScreen(navController = navController)
         }
-        composable(route = Key.SettingScreen.name){
+        composable(route = NavGroup.Setting.Setting_View.id){
             SettingScreen(navController = navController)
         }
-        composable(route = Key.UpLoadScreen.name){
+        composable(route = NavGroup.Peed.Upload_Peed.id){
             UpLoadScreen(navController = navController)
         }
-        composable(route = Key.PostScreen.name){
+        composable(route = NavGroup.Peed.Watch_Peed.id){
             PostScreen()
         }
     }
 }
 
 private fun getStartDestination() =
-    Key.PostScreen.name
+    NavGroup.Main.MainMap.id
+
 //    if (MomoriApp.prefs.isLogin) Key.MainScreen.name else Key.OnBoardScreen.name
