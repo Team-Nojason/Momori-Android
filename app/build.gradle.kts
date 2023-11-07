@@ -58,9 +58,13 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
 }
 
 dependencies {
+
+    implementation ("io.coil-kt:coil-compose:2.4.0") // Coil 라이브러리 의존성
+    implementation ("com.google.accompanist:accompanist-coil:0.15.0") // Accompanist Coil 라이브러리 의존성
 
     // ktx
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
