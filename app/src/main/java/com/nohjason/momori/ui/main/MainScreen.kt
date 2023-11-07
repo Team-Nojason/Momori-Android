@@ -283,7 +283,8 @@ fun MainScreen(
                         kakaoMap.setOnLabelClickListener { kakaoMap, layer, lable ->
                             when (lable) {
                                 marker -> {
-                                    Log.d(TAG, "onMapReady: ${marker}")
+//                                    Log.d(TAG, "onMapReady: ${marker}")
+                                    navController.navigate(NavGroup.Peed.Watch_Peed.id)
 
                                 }
                             }

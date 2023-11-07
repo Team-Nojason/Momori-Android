@@ -38,7 +38,7 @@ fun KeyArray(
             UpLoadScreen(navController = navController)
         }
         composable(route = NavGroup.Peed.Watch_Peed.id){
-            PostScreen()
+            PostScreen(navController = navController)
         }
     }
 }

@@ -30,6 +30,7 @@ import com.nohjason.momori.R
 import com.nohjason.momori.component.appbar.MomoriTopBar
 import com.nohjason.momori.component.appbar.TopBarPrevie1
 import com.nohjason.momori.component.button.MomoriImageButton
+import com.nohjason.momori.component.text.MomoriTextField
 import com.nohjason.momori.ui.root.key.NavGroup
 
 //import com.nohjason.momori.ui.root.key.Key
@@ -70,19 +71,21 @@ fun UpLoadScreen(
                     MomoriImageButton(
                         width = width,
                         height = height,
-                        iconId = R.drawable.naver,
+                        iconId = R.drawable.ic_cancel,
                         modifier = Modifier
                             .align(Alignment.TopEnd)
                             .padding(end = 50.dp)
                             .padding(top = 30.dp)
                             .offset(x = width / 2, y = -height / 2)
                     ) {
+                        // 클릭시 이미지 삭제
                         Log.d("mom", "click")
                     }
                 }
-                TextField(
-                    value = value,
-                    onValueChange = { value = it },
+                var title by remember { mutableStateOf("") }
+                MomoriTextField(
+                    value = title,
+                    onValueChange = {title = it},
                     maxLines = 1,
                     singleLine = true,
                     label = { Text(text = "제목")},
@@ -90,14 +93,15 @@ fun UpLoadScreen(
                         .padding(20.dp)
                         .fillMaxWidth()
                 )
-                TextField(
-                    value = value1,
-                    onValueChange = { value1 = it },
+                var content by remember { mutableStateOf("") }
+                MomoriTextField(
+                    value = content,
+                    onValueChange = { content = it },
                     label = { Text(text = "내용")},
                     modifier = Modifier
                         .padding(20.dp)
                         .fillMaxSize()
-                    )
+                )
             }
         }
     }

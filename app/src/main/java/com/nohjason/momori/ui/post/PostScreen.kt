@@ -1,5 +1,6 @@
 package com.nohjason.momori.ui.post
 
+import android.util.Log
 import android.widget.Button
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
+import androidx.navigation.NavController
 import com.nohjason.momori.R
 import com.nohjason.momori.component.appbar.MomoriTopBar
 import com.nohjason.momori.component.button.ButtonType
@@ -35,10 +37,13 @@ import com.nohjason.momori.component.list.DividerType
 import com.nohjason.momori.component.list.MomoriDivider
 import com.nohjason.momori.component.text.MomoriTextField
 import com.nohjason.momori.component.theme.MomoriColor
+import com.nohjason.momori.ui.root.key.NavGroup
 import com.nohjason.momori.ui.theme.MomoriTheme
 
 @Composable
-fun PostScreen(){
+fun PostScreen(
+    navController: NavController,
+){
 
     Box(
         modifier = Modifier
@@ -83,9 +88,9 @@ fun PostScreen(){
                                 iconId = R.drawable.ic_cancel,
                                 type = ButtonType.Transparent,
                                 modifier = Modifier
-                                    .align(Alignment.CenterVertically)
+                                    .align(Alignment.CenterVertically),
                             ) {
-
+                                navController.navigate(NavGroup.Main.MainMap.id)
                             }
                         }
                     }) {
